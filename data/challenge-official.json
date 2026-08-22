@@ -1,0 +1,11 @@
+{
+  "title": "Annual Average Loss from Tropical Cyclones and Earthquakes at village level for Niue",
+  "publisher": "Pacific Community (SPC), Geoscience, Energy and Maritime Division",
+  "geographicCoverage": "Niue, village level",
+  "issued": "2020-02-03",
+  "modified": "2025-10-14",
+  "source": "https://pacificdata.org/data/dataset/nu-village-aal-tc-eq-493",
+  "indicator": "Estimated annual average direct economic loss",
+  "method": "Losses averaged over 10,000 realizations of next-year activity; buildings, major infrastructure and valuable crops are included.",
+  "displayUse": "The experience uses the dataset's village-scale framing and verified national AAL context. It does not assign unverified loss values to individual villages."
+}

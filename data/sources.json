@@ -1,0 +1,47 @@
+[
+  {
+    "title": "Annual Average Loss from Tropical Cyclones and Earthquakes at village level for Niue",
+    "publisher": "Pacific Community (SPC)",
+    "coverage": "Niue villages",
+    "year": "Issued 2020; modified 2025",
+    "source": "https://pacificdata.org/data/dataset/nu-village-aal-tc-eq-493",
+    "indicator": "Annual average direct economic loss",
+    "processing": "No village loss values copied or inferred."
+  },
+  {
+    "title": "Country Risk Profile: Niue",
+    "publisher": "PCRAFI / GFDRR / World Bank",
+    "coverage": "Niue",
+    "year": 2011,
+    "source": "https://www.gfdrr.org/en/publication/country-risk-profile-niue",
+    "indicator": "AAL, exposure inventory and return-period loss",
+    "processing": "Published values transcribed; currency remains USD."
+  },
+  {
+    "title": "2022 Niue Census of Population and Housing",
+    "publisher": "Statistics Niue Office",
+    "coverage": "Niue and 14 villages",
+    "year": 2022,
+    "source": "https://niuestatistics.nu/census/population-housing/",
+    "indicator": "Census-night population",
+    "processing": "Village share calculated against national census-night total."
+  },
+  {
+    "title": "Niue location map",
+    "publisher": "Wikimedia Commons contributors; based on OpenStreetMap and Niue administrative mapping",
+    "coverage": "Niue village boundaries",
+    "year": "Map revised 2020",
+    "source": "https://commons.wikimedia.org/wiki/File:Niue_location_map.svg",
+    "indicator": "Village geometry",
+    "processing": "SVG boundary paths converted to WGS84 GeoJSON using the published geographic limits; CC BY-SA 2.0."
+  },
+  {
+    "title": "Niue NDC 3.0",
+    "publisher": "Government of Niue / UNFCCC",
+    "coverage": "Niue",
+    "year": 2025,
+    "source": "https://unfccc.int/sites/default/files/2025-07/NIUE%20NDC%203.0.pdf",
+    "indicator": "Costed conditional climate action",
+    "processing": "Shown as a conditional requirement, not expenditure."
+  }
+]

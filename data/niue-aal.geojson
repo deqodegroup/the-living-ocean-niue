@@ -1,0 +1,18 @@
+{
+  "type": "FeatureCollection",
+  "name": "Niue national annual average loss context",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": null,
+      "properties": {
+        "geography": "Niue",
+        "year": 2011,
+        "annual_average_loss_usd": 900000,
+        "hazards": ["tropical cyclone", "earthquake", "tsunami"],
+        "source": "https://www.gfdrr.org/en/publication/country-risk-profile-niue",
+        "note": "Rounded national estimate published by PCRAFI/GFDRR."
+      }
+    }
+  ]
+}

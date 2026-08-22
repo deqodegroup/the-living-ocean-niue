@@ -1,0 +1,9 @@
+{
+  "title": "2022 Niue Census — census-night population by village",
+  "publisher": "Statistics Niue Office",
+  "year": 2022,
+  "total": 1681,
+  "indicator": "Census-night population",
+  "source": "https://niuestatistics.nu/census/population-housing/",
+  "processing": "Village shares shown in the interface are calculated as village population divided by 1,681. No coastal-distance estimate is inferred."
+}
