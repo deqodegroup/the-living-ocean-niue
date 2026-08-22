@@ -4,6 +4,6 @@
   "year": 2022,
   "total": 1681,
   "indicator": "Census-night population",
-  "source": "https://niuestatistics.nu/census/population-housing/",
+  "source": "https://niuestatistics.nu/population/niue-census-of-population-and-housing-2022/",
   "processing": "Village shares shown in the interface are calculated as village population divided by 1,681. No coastal-distance estimate is inferred."
 }

@@ -1,11 +1,15 @@
 {
-  "title": "Annual Average Loss from Tropical Cyclones and Earthquakes at village level for Niue",
-  "publisher": "Pacific Community (SPC), Geoscience, Energy and Maritime Division",
-  "geographicCoverage": "Niue, village level",
-  "issued": "2020-02-03",
-  "modified": "2025-10-14",
-  "source": "https://pacificdata.org/data/dataset/nu-village-aal-tc-eq-493",
-  "indicator": "Estimated annual average direct economic loss",
-  "method": "Losses averaged over 10,000 realizations of next-year activity; buildings, major infrastructure and valuable crops are included.",
-  "displayUse": "The experience uses the dataset's village-scale framing and verified national AAL context. It does not assign unverified loss values to individual villages."
+  "title": "Climate Change indicators — Mean sea surface temperature anomalies",
+  "publisher": "Pacific Community (SPC), Statistics for Development Division",
+  "dataset_id": "SPC:DF_CLIMATE_CHANGE(1.0)",
+  "indicator_code": "SST_ANOM",
+  "geography_code": "NU",
+  "frequency": "Annual",
+  "period_used": "1990–2025",
+  "modified": "2026-05-26",
+  "unit": "Celsius",
+  "official_2026_challenge_dataset": true,
+  "source": "https://stats.pacificdata.org/vis?av=true&df%5Bag%5D=SPC&df%5Bds%5D=SPC2&df%5Bid%5D=DF_CLIMATE_CHANGE&df%5Bvs%5D=1.0&dq=A.SST_ANOM.NU&lc=en&pd=%2C&to%5BTIME_PERIOD%5D=false",
+  "api_query": "https://stats-sdmx-disseminate.pacificdata.org/rest/data/SPC,DF_CLIMATE_CHANGE,1.0/A.SST_ANOM.NU?startPeriod=1990&endPeriod=2025&dimensionAtObservation=AllDimensions",
+  "processing": "Annual observations were transcribed without interpolation. The 1990s and 2016–2025 means are arithmetic averages of ten annual observations each."
 }

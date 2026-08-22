@@ -2,13 +2,34 @@
 
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { VILLAGES } from "./map-data";
-import { EXPOSURE_CONTEXT, FINANCE_CONTEXT, RISK_CONTEXT, SOURCES } from "./content-data";
+import { EXPOSURE_CONTEXT, FINANCE_CONTEXT, OCEAN_CONTEXT, RISK_CONTEXT, SOURCES, SST_ANOMALY_CONTEXT } from "./content-data";
 
 const chapters = ["Enter", "Ocean change", "Loss & damage", "Culture & memory", "Climate finance"];
 
 function money(value: number) {
   if (value >= 1_000_000) return `$${(value / 1_000_000).toFixed(value % 1_000_000 ? 1 : 0)}m`;
   return `$${value.toLocaleString("en-US")}`;
+}
+
+function SstChart() {
+  const width = 460, height = 108, min = -0.25, max = 0.95;
+  const x = (index: number) => (index / (SST_ANOMALY_CONTEXT.series.length - 1)) * width;
+  const y = (value: number) => height - ((value - min) / (max - min)) * height;
+  const points = SST_ANOMALY_CONTEXT.series.map((point, index) => `${x(index).toFixed(1)},${y(point.value).toFixed(1)}`).join(" ");
+  return (
+    <div className="sst-chart">
+      <div className="sst-chart-head"><span>{SST_ANOMALY_CONTEXT.indicator}</span><strong>+{SST_ANOMALY_CONTEXT.recentDecadeMean.toFixed(2)}{SST_ANOMALY_CONTEXT.unit}<small>2016–2025 average</small></strong></div>
+      <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label={`Annual mean sea surface temperature anomalies for Niue from ${SST_ANOMALY_CONTEXT.startYear} to ${SST_ANOMALY_CONTEXT.endYear}`}>
+        <defs><linearGradient id="sst-fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#ff9c7d" stopOpacity=".42" /><stop offset="1" stopColor="#5be9ff" stopOpacity=".02" /></linearGradient></defs>
+        <line className="sst-zero" x1="0" y1={y(0)} x2={width} y2={y(0)} />
+        <polygon className="sst-area" points={`0,${height} ${points} ${width},${height}`} />
+        <polyline className="sst-line" points={points} />
+        {SST_ANOMALY_CONTEXT.series.map((point, index) => <circle key={point.year} className="sst-point" cx={x(index)} cy={y(point.value)} r={index === SST_ANOMALY_CONTEXT.series.length - 1 ? 3 : 1.25}><title>{point.year}: {point.value > 0 ? "+" : ""}{point.value.toFixed(1)}°C</title></circle>)}
+      </svg>
+      <div className="sst-years"><span>{SST_ANOMALY_CONTEXT.startYear}</span><span>Official 2026 SPC dataset</span><span>{SST_ANOMALY_CONTEXT.endYear}</span></div>
+      <p>1990s average <strong>+{SST_ANOMALY_CONTEXT.ninetiesMean.toFixed(2)}°C</strong><i />2016–2025 average <strong>+{SST_ANOMALY_CONTEXT.recentDecadeMean.toFixed(2)}°C</strong></p>
+    </div>
+  );
 }
 
 function Koru() {
@@ -119,6 +140,7 @@ function SourcePanel({ onClose }: { onClose: () => void }) {
             <dl><div><dt>Indicator</dt><dd>{source.indicator}</dd></div><div><dt>Processing</dt><dd>{source.processing}</dd></div></dl>
             <a href={source.url} target="_blank" rel="noreferrer">Open source ↗</a></article>
         ))}</div>
+        <div className="creation-note"><strong>Creation note</strong><p>Concept, data selection, interpretation and final editorial judgement are the entrant&apos;s. AI tools supported coding, copy refinement and visual implementation.</p></div>
       </section>
     </div>
   );
@@ -177,28 +199,30 @@ export default function Home() {
         </div><p className="interaction-legend">Scroll = travel <i /> Mouse / touch = explore</p></Scene>
 
         <Scene index={1} active={activeScene === 1} progress={progress} className="discovery-scene"><div className="discovery-copy">
-          <p className="eyebrow">Ocean change · discover Niue</p><h2>An island emerges<br />inside a living ocean.</h2><p>Bathymetry becomes boundary. Fourteen village places come into view.</p>
-          <div className="echo-caption"><i /><span><strong>ECHO senses a signal</strong>Move forward. The island is awakening.</span></div>
+          <p className="eyebrow">Ocean change · observed signal</p><h2>The ocean is changing<br />around Niue.</h2><p>Annual temperature anomalies reveal the warming signal beneath year-to-year variation.</p>
+          <SstChart />
+          <div className="ocean-projection"><strong>{OCEAN_CONTEXT.seaLevelRiseMinCm}–{OCEAN_CONTEXT.seaLevelRiseMaxCm}<small>cm</small></strong><span>projected sea-level rise by {OCEAN_CONTEXT.projectionYear} · {OCEAN_CONTEXT.scenario}</span></div>
+          <div className="echo-caption"><i /><span><strong>ECHO reads the change</strong>Niue projects increasing ocean acidification under low, medium and high emissions scenarios this century.</span></div>
         </div><div className="distant-island" aria-hidden="true"><div className="island-surface" /><NiueMap selected="" onSelect={() => undefined} onDiscover={() => undefined} active={false} /></div></Scene>
 
         <Scene index={2} active={activeScene === 2} progress={progress} className="map-scene"><div className="map-intro">
-          <p className="eyebrow">Loss &amp; damage · spatial evidence</p><h2>Risk has<br />a location.</h2><p>Approach a village to discover its verified 2022 census-night population. Select it to hold focus.</p>
+          <p className="eyebrow">Loss &amp; damage · people and place</p><h2>Risk and people<br />share a map.</h2><p>Explore each village&apos;s verified 2022 census-night population. Population provides spatial context; it is not a village loss estimate.</p>
         </div><NiueMap selected={selectedVillage} onSelect={(name) => { setSelectedVillage(name); setHoveredVillage(name); }} onDiscover={setHoveredVillage} active={activeScene === 2} />
           <aside className="data-signal" aria-live="polite"><p className="signal-state">Discovery signal · {selectedVillage === selected.name ? "selected" : "nearby"}</p><h3>{selected.name}</h3>
             <strong className="data-number">{selected.population.toLocaleString("en-US")}</strong><span className="data-label">people on census night · 2022</span>
             <p className="share-line">{((selected.population / EXPOSURE_CONTEXT.censusNightPopulation) * 100).toFixed(1)}% of Niue&apos;s census-night population</p>
-            <div className="aal-line"><span>National annual average loss</span><strong>{money(RISK_CONTEXT.annualAverageLossUsd)}</strong><em>USD · published 2011</em></div>
-            <p className="uncertainty-note">No village loss value is displayed unless its numeric record is directly verified.</p></aside>
+            <div className="aal-line"><span>{RISK_CONTEXT.label}</span><strong>{money(RISK_CONTEXT.annualAverageLossUsd)}</strong><em>USD · {RISK_CONTEXT.hazards} · {RISK_CONTEXT.year}</em></div>
+            <p className="uncertainty-note">Village loss figures remain undisclosed until their source values can be directly verified.</p></aside>
         </Scene>
 
-        <Scene index={3} active={activeScene === 3} progress={progress} className="memory-scene"><div className="memory-orbit" aria-hidden="true"><span className="orbit orbit-one" /><span className="orbit orbit-two" /><span className="memory-number">1,681</span></div>
+        <Scene index={3} active={activeScene === 3} progress={progress} className="memory-scene"><div className="memory-orbit" aria-hidden="true"><span className="orbit orbit-one" /><span className="orbit orbit-two" /><span className="memory-number">{EXPOSURE_CONTEXT.censusNightPopulation.toLocaleString("en-US")}</span><span className="memory-label">people counted on census night · 2022</span></div>
           <div className="memory-copy"><p className="eyebrow">Culture &amp; memory · people and place</p><h2>Not everything at risk<br />can be priced.</h2><p className="memory-statement">Loss reaches places people live, work, remember and depend upon.</p>
             <dl className="exposure-line"><div><dt>{EXPOSURE_CONTEXT.buildings.toLocaleString("en-US")}</dt><dd>buildings in the 2010 exposure inventory</dd></div><div><dt>{EXPOSURE_CONTEXT.majorCropsHectares.toLocaleString("en-US")} ha</dt><dd>major crops mapped</dd></div><div><dt>{money(EXPOSURE_CONTEXT.replacementValueUsd)}</dt><dd>estimated asset replacement value</dd></div></dl>
             <p className="year-note">Exposure inventory year: 2010 · not a current asset count</p></div>
         </Scene>
 
         <Scene index={4} active={activeScene === 4} progress={progress} className="future-scene"><div className="finance-paths" aria-hidden="true"><i /><i /><i /><i /></div><div className="future-content">
-          <p className="eyebrow">Climate finance · future</p><h2>Resilience requires<br />more than recognition.</h2><div className="finance-focus"><p>One costed action in Niue NDC 3.0</p><strong>{money(FINANCE_CONTEXT.amountUsd)}</strong><span>{FINANCE_CONTEXT.action}</span><em>{FINANCE_CONTEXT.status} · not confirmed expenditure</em></div>
+          <p className="eyebrow">Climate finance · future</p><h2>Resilience requires<br />more than recognition.</h2><div className="finance-focus"><p>One costed ocean action in Niue NDC 3.0</p><strong>{money(FINANCE_CONTEXT.amountUsd)}</strong><span>{FINANCE_CONTEXT.action}</span><em>{FINANCE_CONTEXT.status} · stated need, not confirmed expenditure</em></div>
           <blockquote><span>Data can measure what is at risk.</span><strong>People determine what must endure.</strong></blockquote><button className="method-cta" onClick={() => setSourcesOpen(true)}>View data &amp; methodology <span>↗</span></button></div>
           <footer><span>ECHO · Niue&apos;s Living Ocean</span><span>Data today · resilience tomorrow</span></footer>
         </Scene>

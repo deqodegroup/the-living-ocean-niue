@@ -1,0 +1,14 @@
+{
+  "title": "Niue NDC 3.0 — ocean change projections",
+  "publisher": "Government of Niue / UNFCCC",
+  "year": 2025,
+  "projection_year": 2030,
+  "sea_level_rise_cm": {
+    "minimum": 4,
+    "maximum": 17,
+    "scenario": "High emissions"
+  },
+  "ocean_acidification": "Projected to continue increasing in Niue waters under low, medium and high emissions scenarios this century",
+  "source": "https://unfccc.int/sites/default/files/2025-07/NIUE%20NDC%203.0.pdf",
+  "interpretation": "These are projections reported in Niue NDC 3.0, not observed change measured by this website."
+}
