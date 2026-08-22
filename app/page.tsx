@@ -169,7 +169,8 @@ export default function Home() {
   useEffect(() => {
     const move = (x: number, y: number) => { const px = x / innerWidth * 100, py = y / innerHeight * 100, root = document.documentElement;
       root.style.setProperty("--pointer-x", `${px}%`); root.style.setProperty("--pointer-y", `${py}%`);
-      root.style.setProperty("--pointer-x-value", `${px}`); root.style.setProperty("--pointer-y-value", `${py}`); };
+      root.style.setProperty("--pointer-x-value", `${px}`); root.style.setProperty("--pointer-y-value", `${py}`);
+      root.style.setProperty("--scene-parallax-x", `${(50 - px) * .12}px`); root.style.setProperty("--scene-parallax-y", `${(50 - py) * .08}px`); };
     const pointer = (event: PointerEvent) => move(event.clientX, event.clientY);
     const touch = (event: TouchEvent) => { const point = event.touches[0]; if (point) move(point.clientX, point.clientY); };
     window.addEventListener("pointermove", pointer, { passive: true }); window.addEventListener("touchmove", touch, { passive: true });
@@ -198,14 +199,14 @@ export default function Home() {
           <button className="enter-button" onClick={enter} aria-label="Enter Niue's Living Ocean"><span className="koru-rings" aria-hidden="true" /><Koru /><strong>Enter</strong></button>
         </div><p className="interaction-legend">Scroll = travel <i /> Mouse / touch = explore</p></Scene>
 
-        <Scene index={1} active={activeScene === 1} progress={progress} className="discovery-scene"><div className="discovery-copy">
+        <Scene index={1} active={activeScene === 1} progress={progress} className="discovery-scene"><div className="scene-image ocean-change-image" aria-hidden="true" /><div className="scene-current current-warm" aria-hidden="true" /><div className="discovery-copy">
           <p className="eyebrow">Ocean change · observed signal</p><h2>The ocean is changing<br />around Niue.</h2><p>Annual temperature anomalies reveal the warming signal beneath year-to-year variation.</p>
           <SstChart />
           <div className="ocean-projection"><strong>{OCEAN_CONTEXT.seaLevelRiseMinCm}–{OCEAN_CONTEXT.seaLevelRiseMaxCm}<small>cm</small></strong><span>projected sea-level rise by {OCEAN_CONTEXT.projectionYear} · {OCEAN_CONTEXT.scenario}</span></div>
           <div className="echo-caption"><i /><span><strong>ECHO reads the change</strong>Niue projects increasing ocean acidification under low, medium and high emissions scenarios this century.</span></div>
         </div><div className="distant-island" aria-hidden="true"><div className="island-surface" /><NiueMap selected="" onSelect={() => undefined} onDiscover={() => undefined} active={false} /></div></Scene>
 
-        <Scene index={2} active={activeScene === 2} progress={progress} className="map-scene"><div className="map-intro">
+        <Scene index={2} active={activeScene === 2} progress={progress} className="map-scene"><div className="scene-image loss-damage-image" aria-hidden="true" /><div className="storm-trace" aria-hidden="true"><i /><i /><i /></div><div className="map-intro">
           <p className="eyebrow">Loss &amp; damage · people and place</p><h2>Risk and people<br />share a map.</h2><p>Explore each village&apos;s verified 2022 census-night population. Population provides spatial context; it is not a village loss estimate.</p>
         </div><NiueMap selected={selectedVillage} onSelect={(name) => { setSelectedVillage(name); setHoveredVillage(name); }} onDiscover={setHoveredVillage} active={activeScene === 2} />
           <aside className="data-signal" aria-live="polite"><p className="signal-state">Discovery signal · {selectedVillage === selected.name ? "selected" : "nearby"}</p><h3>{selected.name}</h3>
@@ -215,13 +216,13 @@ export default function Home() {
             <p className="uncertainty-note">Village loss figures remain undisclosed until their source values can be directly verified.</p></aside>
         </Scene>
 
-        <Scene index={3} active={activeScene === 3} progress={progress} className="memory-scene"><div className="memory-orbit" aria-hidden="true"><span className="orbit orbit-one" /><span className="orbit orbit-two" /><span className="memory-number">{EXPOSURE_CONTEXT.censusNightPopulation.toLocaleString("en-US")}</span><span className="memory-label">people counted on census night · 2022</span></div>
+        <Scene index={3} active={activeScene === 3} progress={progress} className="memory-scene"><div className="scene-image culture-memory-image" aria-hidden="true" /><div className="memory-orbit" aria-hidden="true"><span className="orbit orbit-one" /><span className="orbit orbit-two" /><span className="memory-number">{EXPOSURE_CONTEXT.censusNightPopulation.toLocaleString("en-US")}</span><span className="memory-label">people counted on census night · 2022</span></div>
           <div className="memory-copy"><p className="eyebrow">Culture &amp; memory · people and place</p><h2>Not everything at risk<br />can be priced.</h2><p className="memory-statement">Loss reaches places people live, work, remember and depend upon.</p>
             <dl className="exposure-line"><div><dt>{EXPOSURE_CONTEXT.buildings.toLocaleString("en-US")}</dt><dd>buildings in the 2010 exposure inventory</dd></div><div><dt>{EXPOSURE_CONTEXT.majorCropsHectares.toLocaleString("en-US")} ha</dt><dd>major crops mapped</dd></div><div><dt>{money(EXPOSURE_CONTEXT.replacementValueUsd)}</dt><dd>estimated asset replacement value</dd></div></dl>
             <p className="year-note">Exposure inventory year: 2010 · not a current asset count</p></div>
         </Scene>
 
-        <Scene index={4} active={activeScene === 4} progress={progress} className="future-scene"><div className="finance-paths" aria-hidden="true"><i /><i /><i /><i /></div><div className="future-content">
+        <Scene index={4} active={activeScene === 4} progress={progress} className="future-scene"><div className="scene-image future-image" aria-hidden="true" /><div className="finance-paths" aria-hidden="true"><i /><i /><i /><i /></div><div className="future-content">
           <p className="eyebrow">Climate finance · future</p><h2>Resilience requires<br />more than recognition.</h2><div className="finance-focus"><p>One costed ocean action in Niue NDC 3.0</p><strong>{money(FINANCE_CONTEXT.amountUsd)}</strong><span>{FINANCE_CONTEXT.action}</span><em>{FINANCE_CONTEXT.status} · stated need, not confirmed expenditure</em></div>
           <blockquote><span>Data can measure what is at risk.</span><strong>People determine what must endure.</strong></blockquote><button className="method-cta" onClick={() => setSourcesOpen(true)}>View data &amp; methodology <span>↗</span></button></div>
           <footer><span>ECHO · Niue&apos;s Living Ocean</span><span>Data today · resilience tomorrow</span></footer>
