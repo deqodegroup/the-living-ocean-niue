@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react"
 import { ECHO_MEDIA } from "./media-data";
 import { SOURCES, SST_ANOMALY_CONTEXT } from "./content-data";
 import { VILLAGES } from "./map-data";
+import ScrollWorldVideo from "./scroll-world-video";
 import styles from "./echo-world.module.css";
 
 const SCENE_STOPS = [0.04, 0.19, 0.37, 0.55, 0.74, 0.93];
@@ -107,24 +108,6 @@ function EchoGuide({ scene, progress, entered }: { scene: number; progress: numb
   );
 }
 
-function VideoWorld({ scene, progress }: { scene: number; progress: number }) {
-  return (
-    <div className={styles.videoWorld} aria-hidden="true">
-      {ECHO_MEDIA.map((item, index) => {
-        const distance = Math.abs(index - scene);
-        const opacity = distance === 0 ? 1 : distance === 1 ? 0.16 : 0;
-        return (
-          <video key={item.id} className={styles.sceneVideo} src={item.file} autoPlay muted loop playsInline preload={distance <= 1 ? "auto" : "metadata"}
-            style={{ opacity, transform: `scale(${1.055 + progress * .025}) translate3d(var(--parallax-x,0px),var(--parallax-y,0px),0)` }} />
-        );
-      })}
-      <div className={styles.cinematicGrade} />
-      <div className={styles.caustics} />
-      <div className={styles.pointerLight} />
-    </div>
-  );
-}
-
 function VillageSignal({ onDiscover }: { onDiscover: () => void }) {
   const village = VILLAGES.find((v) => v.name === "Alofi South") ?? VILLAGES[0];
   return (
@@ -217,7 +200,7 @@ export default function Home() {
     <main className={styles.world}>
       <div ref={trackRef} className={styles.track}>
         <div className={styles.camera}>
-          <VideoWorld scene={activeScene} progress={progress} />
+          <ScrollWorldVideo scene={activeScene} progress={progress} />
           <LivingParticles scene={activeScene} />
           <FishSchool scene={activeScene} />
           <EchoGuide scene={activeScene} progress={progress} entered={entered} />
