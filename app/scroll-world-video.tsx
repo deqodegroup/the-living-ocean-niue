@@ -7,8 +7,8 @@ import styles from "./echo-world.module.css";
 // Scroll mechanics adapted from oso95/scroll-world (MIT).
 // Source: https://github.com/oso95/scroll-world
 // Showcase rule for ECHO: every scene owns a full-viewport video panel. Scroll
-// progress chooses the dominant panel, so the next video is already present as a
-// page-scale layer instead of waiting inside a fragile hidden stack.
+// progress chooses the dominant panel, while muted inline playback guarantees
+// each visible panel paints a real video frame instead of falling back to the wall.
 
 const SCENE_BOUNDS = [0.12, 0.29, 0.46, 0.64, 0.83];
 const CROSSFADE = 0.085;
@@ -67,10 +67,23 @@ export default function ScrollWorldVideo({ progress, scene }: { progress: number
   }, [progress]);
 
   useEffect(() => {
+    videoRefs.current.forEach((video) => {
+      if (!video) return;
+      video.muted = true;
+      video.loop = true;
+      video.playsInline = true;
+      try {
+        const promise = video.play();
+        if (promise) promise.catch(() => {});
+      } catch {}
+    });
+  }, []);
+
+  useEffect(() => {
     let raf = 0;
     const coarse = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const epsilon = coarse ? 0.03 : 0.01;
+    const epsilon = coarse ? 0.06 : 0.018;
 
     const draw = () => {
       const p = progressRef.current;
@@ -80,7 +93,7 @@ export default function ScrollWorldVideo({ progress, scene }: { progress: number
         const video = videoRefs.current[index];
         if (!video || !Number.isFinite(video.duration) || video.duration <= 0 || video.seeking) return;
 
-        current.current[index] += (target.current[index] - current.current[index]) * (reduce ? 1 : 0.24);
+        current.current[index] += (target.current[index] - current.current[index]) * (reduce ? 1 : 0.18);
         const time = clamp(current.current[index], 0, 0.995) * video.duration;
 
         if (Math.abs(video.currentTime - time) > epsilon) {
@@ -96,25 +109,24 @@ export default function ScrollWorldVideo({ progress, scene }: { progress: number
   }, []);
 
   useEffect(() => {
-    let primed = false;
     const prime = () => {
-      if (primed) return;
-      primed = true;
       videoRefs.current.forEach((video) => {
         if (!video) return;
+        video.muted = true;
         try {
-          video.muted = true;
           const promise = video.play();
-          if (promise) promise.then(() => video.pause()).catch(() => {});
+          if (promise) promise.catch(() => {});
         } catch {}
       });
     };
 
-    window.addEventListener("pointerdown", prime, { once: true, passive: true });
-    window.addEventListener("touchstart", prime, { once: true, passive: true });
+    window.addEventListener("pointerdown", prime, { passive: true });
+    window.addEventListener("touchstart", prime, { passive: true });
+    window.addEventListener("scroll", prime, { passive: true });
     return () => {
       window.removeEventListener("pointerdown", prime);
       window.removeEventListener("touchstart", prime);
+      window.removeEventListener("scroll", prime);
     };
   }, []);
 
@@ -141,9 +153,10 @@ export default function ScrollWorldVideo({ progress, scene }: { progress: number
               className={styles.sceneVideo}
               src={item.file}
               muted
+              autoPlay
+              loop
               playsInline
               preload="auto"
-              poster=""
               style={{
                 transform: `scale(${1.08 + progress * 0.025}) translate3d(var(--parallax-x,0px),var(--parallax-y,0px),0)`,
               }}
