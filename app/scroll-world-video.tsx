@@ -6,8 +6,9 @@ import styles from "./echo-world.module.css";
 
 // Scroll mechanics adapted from oso95/scroll-world (MIT).
 // Source: https://github.com/oso95/scroll-world
-// Showcase rule for ECHO: every scene owns the sticky camera viewport. Video
-// panels remain inside that camera so they cannot escape above HUD/data layers.
+// Performance rule for ECHO: only the active scene and the next scene stay
+// mounted. Only the active scene plays; the next scene is metadata-preloaded.
+// Video panels remain inside the sticky camera so HUD/data always paint above.
 
 const SCENE_BOUNDS = [0.12, 0.29, 0.46, 0.64, 0.83];
 const CROSSFADE = 0.085;
@@ -70,6 +71,7 @@ export default function ScrollWorldVideo({ progress, scene }: { progress: number
   const current = useRef<number[]>(Array(ECHO_MEDIA.length).fill(0));
   const target = useRef<number[]>(Array(ECHO_MEDIA.length).fill(0));
   const progressRef = useRef(progress);
+  const sceneRef = useRef(scene);
   const weights = panelWeights(progress);
 
   useEffect(() => {
@@ -77,39 +79,48 @@ export default function ScrollWorldVideo({ progress, scene }: { progress: number
   }, [progress]);
 
   useEffect(() => {
-    videoRefs.current.forEach((video) => {
+    sceneRef.current = scene;
+
+    videoRefs.current.forEach((video, index) => {
       if (!video) return;
       video.muted = true;
       video.loop = true;
       video.playsInline = true;
-      try {
-        const promise = video.play();
-        if (promise) promise.catch(() => {});
-      } catch {}
+
+      if (index === scene) {
+        try {
+          const promise = video.play();
+          if (promise) promise.catch(() => {});
+        } catch {}
+      } else {
+        video.pause();
+      }
     });
-  }, []);
+  }, [scene]);
 
   useEffect(() => {
     let raf = 0;
     const coarse = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const epsilon = coarse ? 0.06 : 0.018;
+    const epsilon = coarse ? 0.08 : 0.024;
 
     const draw = () => {
       const p = progressRef.current;
+      const active = sceneRef.current;
+      const next = Math.min(ECHO_MEDIA.length - 1, active + 1);
 
-      ECHO_MEDIA.forEach((_, index) => {
-        target.current[index] = localProgress(p, index);
+      for (const index of [active, next]) {
         const video = videoRefs.current[index];
-        if (!video || !Number.isFinite(video.duration) || video.duration <= 0 || video.seeking) return;
+        if (!video || !Number.isFinite(video.duration) || video.duration <= 0 || video.seeking) continue;
 
-        current.current[index] += (target.current[index] - current.current[index]) * (reduce ? 1 : 0.18);
+        target.current[index] = localProgress(p, index);
+        current.current[index] += (target.current[index] - current.current[index]) * (reduce ? 1 : 0.16);
         const time = clamp(current.current[index], 0, 0.995) * video.duration;
 
         if (Math.abs(video.currentTime - time) > epsilon) {
           try { video.currentTime = time; } catch {}
         }
-      });
+      }
 
       raf = requestAnimationFrame(draw);
     };
@@ -119,24 +130,21 @@ export default function ScrollWorldVideo({ progress, scene }: { progress: number
   }, []);
 
   useEffect(() => {
-    const prime = () => {
-      videoRefs.current.forEach((video) => {
-        if (!video) return;
-        video.muted = true;
-        try {
-          const promise = video.play();
-          if (promise) promise.catch(() => {});
-        } catch {}
-      });
+    const primeActive = () => {
+      const video = videoRefs.current[sceneRef.current];
+      if (!video) return;
+      video.muted = true;
+      try {
+        const promise = video.play();
+        if (promise) promise.catch(() => {});
+      } catch {}
     };
 
-    window.addEventListener("pointerdown", prime, { passive: true });
-    window.addEventListener("touchstart", prime, { passive: true });
-    window.addEventListener("scroll", prime, { passive: true });
+    window.addEventListener("pointerdown", primeActive, { passive: true });
+    window.addEventListener("touchstart", primeActive, { passive: true });
     return () => {
-      window.removeEventListener("pointerdown", prime);
-      window.removeEventListener("touchstart", prime);
-      window.removeEventListener("scroll", prime);
+      window.removeEventListener("pointerdown", primeActive);
+      window.removeEventListener("touchstart", primeActive);
     };
   }, []);
 
@@ -152,8 +160,12 @@ export default function ScrollWorldVideo({ progress, scene }: { progress: number
       }}
     >
       {ECHO_MEDIA.map((item, index) => {
+        const isCurrent = index === scene;
+        const isNext = index === scene + 1;
+        const shouldMount = isCurrent || isNext;
+        if (!shouldMount) return null;
+
         const weight = weights[index];
-        const isNearby = weight > 0 || Math.abs(index - scene) <= 1;
 
         return (
           <div
@@ -163,9 +175,9 @@ export default function ScrollWorldVideo({ progress, scene }: { progress: number
             style={{
               ...viewportLayer,
               opacity: weight,
-              zIndex: weight > 0 ? 2 + index : 1,
-              visibility: isNearby ? "visible" : "hidden",
-              transition: "opacity 680ms ease, visibility 680ms ease",
+              zIndex: isCurrent ? 3 : 2,
+              visibility: "visible",
+              transition: "opacity 680ms ease",
               background: "transparent",
             }}
           >
@@ -174,10 +186,10 @@ export default function ScrollWorldVideo({ progress, scene }: { progress: number
               className={styles.sceneVideo}
               src={item.file}
               muted
-              autoPlay
+              autoPlay={isCurrent}
               loop
               playsInline
-              preload="auto"
+              preload={isCurrent || isNext ? "metadata" : "none"}
               style={{
                 position: "absolute",
                 inset: 0,
