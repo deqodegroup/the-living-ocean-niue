@@ -127,7 +127,7 @@ export default function ScrollWorldVideo({ progress, scene }: { progress: number
         return (
           <div
             key={item.id}
-            className={styles.scenePanel}
+            className="echo-scene-panel"
             data-scene-panel={item.id}
             style={{
               opacity: weight,
