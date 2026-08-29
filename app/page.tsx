@@ -45,11 +45,7 @@ function SstSignal() {
 function FishSchool({ scene }: { scene: number }) {
   const density = [18, 30, 50, 34, 16, 46][scene] ?? 24;
   return (
-    <div
-      className={styles.fishField}
-      aria-hidden="true"
-      style={{ transform: "translate3d(var(--fish-drift-x,0px),var(--fish-drift-y,0px),0)" }}
-    >
+    <div className={styles.fishField} aria-hidden="true" style={{ transform: "translate3d(var(--fish-drift-x,0px),var(--fish-drift-y,0px),0)" }}>
       {Array.from({ length: density }, (_, index) => {
         const x = (index * 37 + scene * 11) % 100;
         const y = 12 + ((index * 53 + scene * 17) % 74);
@@ -65,13 +61,7 @@ function LivingParticles({ scene }: { scene: number }) {
   return (
     <div className={styles.particles} aria-hidden="true">
       {Array.from({ length: 78 }, (_, index) => (
-        <i key={index} style={{
-          "--px": `${(index * 47 + scene * 9) % 100}%`,
-          "--py": `${(index * 71 + 7) % 100}%`,
-          "--ps": `${1 + (index % 4)}px`,
-          "--pd": `${-((index * .61) % 13)}s`,
-          "--pc": `${index % 3}`,
-        } as CSSProperties} />
+        <i key={index} style={{ "--px": `${(index * 47 + scene * 9) % 100}%`, "--py": `${(index * 71 + 7) % 100}%`, "--ps": `${1 + (index % 4)}px`, "--pd": `${-((index * .61) % 13)}s`, "--pc": `${index % 3}` } as CSSProperties} />
       ))}
     </div>
   );
@@ -105,9 +95,7 @@ function EchoGuide({ scene, progress, entered }: { scene: number; progress: numb
   }, [scene, progress]);
   return (
     <div ref={ref} className={`${styles.echo} ${entered ? styles.echoAwake : ""}`} aria-hidden="true">
-      <span className={styles.echoWake} />
-      <span className={styles.echoHaloA} /><span className={styles.echoHaloB} />
-      <span className={styles.echoCore} /><span className={styles.echoComet} />
+      <span className={styles.echoWake} /><span className={styles.echoHaloA} /><span className={styles.echoHaloB} /><span className={styles.echoCore} /><span className={styles.echoComet} />
     </div>
   );
 }
@@ -116,9 +104,7 @@ function VillageSignal({ onDiscover }: { onDiscover: () => void }) {
   const village = VILLAGES.find((v) => v.name === "Alofi South") ?? VILLAGES[0];
   return (
     <button className={styles.villageSignal} onPointerEnter={onDiscover} onFocus={onDiscover} onClick={onDiscover}>
-      <span>Memory awakened</span>
-      <strong>{village.name}</strong>
-      <em>{village.population} people · 2022 Census</em>
+      <span>Memory awakened</span><strong>{village.name}</strong><em>{village.population} people · 2022 Census</em>
     </button>
   );
 }
@@ -150,6 +136,7 @@ export default function Home() {
     if (progress < SCENE_BOUNDS[4]) return 4;
     return 5;
   }, [progress]);
+  const reefSignalVisible = discovered || (activeScene === 2 && progress > 0.40);
 
   useEffect(() => {
     let ticking = false;
@@ -181,8 +168,6 @@ export default function Home() {
       root.style.setProperty("--parallax-y", `${(50 - py) * .075}px`);
       root.style.setProperty("--fish-drift-x", `${(50 - px) * .05}px`);
       root.style.setProperty("--fish-drift-y", `${(50 - py) * .035}px`);
-
-      // Reef discovery is now environmental: investigate the living school and the data wakes up.
       if (activeScene === 2 && px > 28 && px < 78 && py > 22 && py < 80) setDiscovered(true);
       if (activeScene === 4 && px > 18 && px < 72 && py > 24 && py < 84) setDiscovered(true);
     };
@@ -192,11 +177,6 @@ export default function Home() {
     window.addEventListener("touchmove", touch, { passive: true });
     return () => { window.removeEventListener("pointermove", pointer); window.removeEventListener("touchmove", touch); };
   }, [activeScene]);
-
-  useEffect(() => {
-    // Preserve discoverability for keyboard/reduced-interaction users without making a button the primary mechanic.
-    if (activeScene === 2 && progress > 0.40) setDiscovered(true);
-  }, [activeScene, progress]);
 
   const travelTo = (value: number) => {
     const track = trackRef.current;
@@ -219,40 +199,29 @@ export default function Home() {
           <LivingParticles scene={activeScene} />
           <FishSchool scene={activeScene} />
           <EchoGuide scene={activeScene} progress={progress} entered={entered} />
-
           <header className={styles.header}><button onClick={() => travelTo(0)} className={styles.brand}>ECHO <span>THE LIVING OCEAN — NIUE</span></button><button className={styles.sourcesButton} onClick={() => setSourcesOpen(true)}>Sources</button></header>
-
           <nav className={styles.progressNav} aria-label="Journey scenes">{ECHO_MEDIA.map((item, index) => <button key={item.id} className={activeScene === index ? styles.navActive : ""} onClick={() => { setEntered(true); travelTo(SCENE_STOPS[index]); }}><i /><span>{item.title}</span></button>)}</nav>
-
           <section className={`${styles.overlay} ${activeScene === 0 ? styles.visible : ""}`}>
-            <p className={styles.eyebrow}>Pacific Dataviz Challenge 2026</p>
-            <h1>ECHO</h1><h2>THE LIVING OCEAN — NIUE</h2>
-            <button className={styles.enter} onClick={enter}><span className={styles.koruAura} /><Koru /><strong>TOUCH THE KORU TO ENTER</strong></button>
-            <p className={styles.heroLine}>THE OCEAN IS ALIVE</p>
+            <p className={styles.eyebrow}>Pacific Dataviz Challenge 2026</p><h1>ECHO</h1><h2>THE LIVING OCEAN — NIUE</h2>
+            <button className={styles.enter} onClick={enter}><span className={styles.koruAura} /><Koru /><strong>TOUCH THE KORU TO ENTER</strong></button><p className={styles.heroLine}>THE OCEAN IS ALIVE</p>
           </section>
-
           <section className={`${styles.overlay} ${styles.storyLeft} ${activeScene === 1 ? styles.visible : ""}`}>
             <p className={styles.eyebrow}>Dolphin Current</p><h2>Follow the current.</h2><p>ECHO moves with the ocean. Scroll to travel. Move the mouse or touch the water to explore.</p>
           </section>
-
           <section className={`${styles.overlay} ${styles.storyRight} ${activeScene === 2 ? styles.visible : ""}`}>
             <p className={styles.eyebrow}>Reef Community</p><h2>Life gathers here.</h2><p>Move through the school. The reef reacts — and the signal hidden inside the living ocean reveals itself.</p>
             <button className={styles.discoveryButton} onClick={() => setDiscovered((value) => !value)}>Reveal reef signal</button>
-            <div className={`${styles.microSignal} ${discovered ? styles.revealed : ""}`}><strong>+0.58°C</strong><span>Difference between the 1990s mean and the 2016–2025 mean</span></div>
+            <div className={`${styles.microSignal} ${reefSignalVisible ? styles.revealed : ""}`}><strong>+0.58°C</strong><span>Difference between the 1990s mean and the 2016–2025 mean</span></div>
           </section>
-
           <section className={`${styles.overlay} ${styles.storyLeft} ${activeScene === 3 ? styles.visible : ""}`}>
             <p className={styles.eyebrow}>Changing Ocean</p><h2>The signal is in the water.</h2><p>Across the SPC record, Niue&apos;s 2016–2025 mean sea-surface temperature anomaly is 0.58°C warmer than the 1990s mean.</p><SstSignal />
           </section>
-
           <section className={`${styles.overlay} ${styles.storyRight} ${activeScene === 4 ? styles.visible : ""}`}>
             <p className={styles.eyebrow}>Memory Cavern</p><h2>People. Place. Memory.</h2><p>ECHO quietens here. Move closer and the island begins to speak.</p><VillageSignal onDiscover={() => setDiscovered(true)} />
           </section>
-
           <section className={`${styles.overlay} ${styles.storyLeft} ${activeScene === 5 ? styles.visible : ""}`}>
             <p className={styles.eyebrow}>Protected Future</p><h2>Abundance is the destination.</h2><p>A living ocean is not a backdrop. It is food, culture, protection, identity and possibility.</p><button className={styles.finalButton} onClick={() => setSourcesOpen(true)}>Explore the evidence</button>
           </section>
-
           <div className={styles.scrollLegend}>SCROLL = TRAVEL <i /> MOUSE / TOUCH = EXPLORE <i /> FOLLOW ECHO</div>
         </div>
       </div>
