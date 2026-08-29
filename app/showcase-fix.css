@@ -1,13 +1,17 @@
-/* ECHO ScrollWorld structural stage fix.
-   Rule: the scroll track is only the invisible progress ruler; the camera is the fixed
-   full-screen ocean stage. Each video now lives inside its own full-scene panel.
-   No copy, data, palette, scene order, video source or layout redesign changes live here. */
+/* ECHO ScrollWorld architecture guard.
+   One positioning system only:
+   - track = scroll ruler
+   - camera = sticky full-viewport stage
+   - OG HUD/data overlays = absolute inside that sticky stage
+   - video viewport sizing remains inline in scroll-world-video.tsx
+*/
+
 html,
 body {
   width: 100%;
   min-height: 100%;
   margin: 0;
-  overflow-x: clip !important;
+  overflow-x: clip;
   background: #02111d;
 }
 
@@ -17,252 +21,76 @@ body {
 }
 
 main[class*="world"] {
-  position: relative !important;
-  min-height: 760vh !important;
-  min-height: 760dvh !important;
-  overflow-x: clip !important;
-  background: transparent !important;
+  position: relative;
+  min-height: 760vh;
+  min-height: 760dvh;
+  overflow-x: clip;
+  background: transparent;
 }
 
 main[class*="world"] > div[class*="track"] {
-  position: relative !important;
-  min-height: 760vh !important;
-  min-height: 760dvh !important;
-  background: transparent !important;
-  pointer-events: none !important;
-  z-index: 0 !important;
+  position: relative;
+  height: 760vh;
+  height: 760dvh;
+  min-height: 760vh;
+  min-height: 760dvh;
+  background: transparent;
 }
 
 main[class*="world"] > div[class*="track"] > div[class*="camera"] {
-  position: fixed !important;
-  inset: 0 !important;
-  width: 100vw !important;
+  position: sticky !important;
+  position: -webkit-sticky !important;
+  top: 0 !important;
+  left: 0;
+  width: 100%;
   height: 100vh !important;
   height: 100dvh !important;
-  min-width: 100vw !important;
-  min-height: 100vh !important;
-  min-height: 100dvh !important;
-  overflow: hidden !important;
-  background: #052d51 !important;
-  isolation: isolate !important;
-  contain: paint !important;
-  z-index: 999 !important;
-  pointer-events: auto !important;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+  background: #052d51;
+  isolation: isolate;
+  pointer-events: auto;
 }
 
+/* Keep the proven video stack above the ocean base, but below OG graphics/data. */
 main[class*="world"] div[class*="videoWorld"] {
-  position: fixed !important;
-  inset: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  height: 100dvh !important;
-  min-width: 100vw !important;
-  min-height: 100vh !important;
-  min-height: 100dvh !important;
-  overflow: hidden !important;
-  background: transparent !important;
   z-index: 1 !important;
 }
 
 main[class*="world"] .echo-scene-panel {
-  position: fixed !important;
-  inset: 0 !important;
-  display: block !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  height: 100dvh !important;
-  min-width: 100vw !important;
-  min-height: 100vh !important;
-  min-height: 100dvh !important;
-  overflow: hidden !important;
-  background: transparent !important;
-  will-change: opacity !important;
-  pointer-events: none !important;
+  pointer-events: none;
 }
 
-main[class*="world"] video[class*="sceneVideo"] {
-  position: fixed !important;
-  inset: 0 !important;
-  display: block !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  height: 100dvh !important;
-  min-width: 100vw !important;
-  min-height: 100vh !important;
-  min-height: 100dvh !important;
-  max-width: none !important;
-  max-height: none !important;
-  object-fit: cover !important;
-  object-position: center center !important;
-  transform-origin: center center !important;
-  z-index: 2 !important;
-}
-
-main[class*="world"] div[class*="cinematicGrade"] {
-  z-index: 60 !important;
-}
-
-main[class*="world"] div[class*="caustics"] {
-  z-index: 61 !important;
-}
-
-main[class*="world"] div[class*="pointerLight"] {
-  z-index: 62 !important;
-}
-
-main[class*="world"] div[class*="particles"],
-main[class*="world"] div[class*="fishField"] {
-  z-index: 70 !important;
-}
-
-main[class*="world"] div[class*="cinematicGrade"],
-main[class*="world"] div[class*="caustics"],
-main[class*="world"] div[class*="pointerLight"],
-main[class*="world"] div[class*="particles"],
-main[class*="world"] div[class*="fishField"] {
-  position: fixed !important;
-  inset: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  height: 100dvh !important;
-  min-height: 100vh !important;
-  min-height: 100dvh !important;
-  pointer-events: none !important;
-}
-
-main[class*="world"] section[class*="overlay"],
+/* OG camera children remain in their native absolute positioning.
+   Do not force header, progress nav, overlays, legend, particles or data cards fixed. */
 main[class*="world"] header[class*="header"],
 main[class*="world"] nav[class*="progressNav"],
-main[class*="world"] div[class*="scrollLegend"] {
-  position: fixed !important;
-  z-index: 120 !important;
+main[class*="world"] section[class*="overlay"],
+main[class*="world"] div[class*="scrollLegend"],
+main[class*="world"] div[class*="particles"],
+main[class*="world"] div[class*="fishField"] {
+  position: absolute !important;
 }
 
-/* Pin only the OG navigation/HUD layer. Do not redesign hero, data, or videos. */
-main[class*="world"] header[class*="header"] {
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  bottom: auto !important;
-  transform: none !important;
-  z-index: 220 !important;
+/* Preserve the original interaction hierarchy above the video stack. */
+main[class*="world"] section[class*="overlay"] {
+  z-index: 30 !important;
 }
 
 main[class*="world"] nav[class*="progressNav"] {
-  position: fixed !important;
-  top: 50% !important;
-  right: clamp(14px, 3vw, 44px) !important;
-  left: auto !important;
-  bottom: auto !important;
-  transform: translateY(-50%) !important;
-  z-index: 220 !important;
+  z-index: 45 !important;
 }
 
+main[class*="world"] header[class*="header"],
 main[class*="world"] div[class*="scrollLegend"] {
-  position: fixed !important;
-  left: 50% !important;
-  right: auto !important;
-  top: auto !important;
-  bottom: 20px !important;
-  transform: translateX(-50%) !important;
-  z-index: 220 !important;
+  z-index: 50 !important;
 }
 
-/* OG data reveal pass: strengthen the existing data without changing scene structure. */
-main[class*="world"] section[class*="overlay"]:first-of-type::after {
-  content: "DATA REVEALS THROUGH TOUCH, SCROLL AND REEF LIFE";
-  position: absolute;
-  left: 50%;
-  bottom: 82px;
-  transform: translateX(-50%);
-  padding: 9px 14px;
-  border: 1px solid rgba(134, 244, 255, 0.34);
-  border-radius: 999px;
-  background: rgba(2, 28, 52, 0.28);
-  backdrop-filter: blur(12px);
-  color: rgba(224, 252, 255, 0.82);
-  font-size: 8px;
-  letter-spacing: 0.18em;
-  white-space: nowrap;
-  text-shadow: 0 0 14px rgba(91, 233, 255, 0.46);
-  pointer-events: none;
+main[class*="world"] div[class*="particles"] {
+  z-index: 6 !important;
 }
 
-main[class*="world"] div[class*="signalCard"],
-main[class*="world"] div[class*="microSignal"],
-main[class*="world"] button[class*="villageSignal"] {
-  position: relative !important;
-  border-color: rgba(144, 246, 255, 0.5) !important;
-  background: linear-gradient(135deg, rgba(2, 39, 72, 0.46), rgba(14, 32, 72, 0.42) 52%, rgba(99, 35, 143, 0.20)) !important;
-  box-shadow: 0 24px 84px rgba(0, 18, 46, 0.38), inset 0 0 46px rgba(91, 233, 255, 0.06), 0 0 38px rgba(91, 233, 255, 0.12) !important;
-}
-
-main[class*="world"] div[class*="signalCard"]::before {
-  content: "SPC DATA SIGNAL";
-  position: absolute;
-  right: 18px;
-  top: 14px;
-  color: rgba(164, 248, 255, 0.55);
-  font-size: 7px;
-  letter-spacing: 0.18em;
-  pointer-events: none;
-}
-
-main[class*="world"] div[class*="signalCard"] svg {
-  filter: drop-shadow(0 0 12px rgba(91, 233, 255, 0.36)) !important;
-}
-
-main[class*="world"] div[class*="microSignal"] {
-  padding: 16px 18px !important;
-  border: 1px solid rgba(139, 244, 255, 0.38) !important;
-  border-radius: 20px !important;
-  backdrop-filter: blur(15px) !important;
-}
-
-main[class*="world"] div[class*="microSignal"][class*="revealed"] {
-  opacity: 1 !important;
-  transform: translateY(0) scale(1) !important;
-  animation: echoDataPulse 2.7s ease-in-out infinite;
-}
-
-main[class*="world"] div[class*="microSignal"] strong {
-  color: #a8fbff !important;
-  text-shadow: 0 0 18px rgba(91, 233, 255, 0.82), 0 0 44px rgba(188, 88, 255, 0.28) !important;
-}
-
-main[class*="world"] button[class*="discoveryButton"] {
-  border-radius: 999px !important;
-  box-shadow: 0 0 26px rgba(91, 233, 255, 0.11), inset 0 0 24px rgba(91, 233, 255, 0.045) !important;
-}
-
-main[class*="world"] button[class*="discoveryButton"]::after {
-  content: "  •  reveal by touch";
-  color: rgba(166, 248, 255, 0.78);
-}
-
-main[class*="world"] button[class*="villageSignal"]::after {
-  content: "INTERACTION UNLOCKED";
-  position: absolute;
-  right: 16px;
-  top: 14px;
-  color: rgba(164, 248, 255, 0.46);
-  font-size: 7px;
-  letter-spacing: 0.16em;
-  pointer-events: none;
-}
-
-@keyframes echoDataPulse {
-  0%, 100% { box-shadow: 0 22px 72px rgba(0, 18, 46, 0.34), 0 0 28px rgba(91, 233, 255, 0.10), inset 0 0 30px rgba(91, 233, 255, 0.04); }
-  50% { box-shadow: 0 24px 84px rgba(0, 18, 46, 0.38), 0 0 46px rgba(91, 233, 255, 0.22), inset 0 0 44px rgba(91, 233, 255, 0.07); }
-}
-
-@media (max-width: 760px) {
-  main[class*="world"] section[class*="overlay"]:first-of-type::after {
-    width: calc(100vw - 48px);
-    white-space: normal;
-    text-align: center;
-    line-height: 1.45;
-    bottom: 86px;
-  }
+main[class*="world"] div[class*="fishField"] {
+  z-index: 7 !important;
 }
