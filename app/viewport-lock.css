@@ -1,5 +1,5 @@
 /* ECHO P0 viewport lock
-   Keep the cinematic camera edge-to-edge while the long journey track scrolls beneath it. */
+   Pin the cinematic camera to the browser while the long journey track drives progress underneath it. */
 html,
 body {
   width: 100%;
@@ -11,7 +11,6 @@ body {
   overflow-x: clip;
 }
 
-/* CSS-module class names retain these readable tokens in the production build. */
 [class*="echo-world_world__"] {
   width: 100%;
   min-height: 100vh;
@@ -23,18 +22,18 @@ body {
   width: 100%;
 }
 
+/* Fixed — not sticky. This removes ancestor/overflow interactions that can expose the scroll track. */
 [class*="echo-world_camera__"] {
-  position: sticky !important;
-  position: -webkit-sticky !important;
-  top: 0 !important;
-  left: 0;
+  position: fixed !important;
+  inset: 0 !important;
   width: 100vw !important;
   height: 100vh !important;
   height: 100dvh !important;
   min-height: 100vh !important;
   min-height: 100dvh !important;
-  max-height: 100dvh !important;
+  max-height: none !important;
   overflow: hidden !important;
+  z-index: 0;
 }
 
 [class*="echo-world_videoWorld__"] {
@@ -58,7 +57,6 @@ body {
   [class*="echo-world_camera__"] {
     height: 100svh !important;
     min-height: 100svh !important;
-    max-height: 100svh !important;
   }
 }
 
@@ -66,6 +64,5 @@ body {
   [class*="echo-world_camera__"] {
     height: 100vh !important;
     min-height: 100vh !important;
-    max-height: 100vh !important;
   }
 }
