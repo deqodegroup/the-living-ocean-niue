@@ -6,12 +6,12 @@ import styles from "./echo-world.module.css";
 
 // Scroll mechanics adapted from oso95/scroll-world (MIT).
 // Source: https://github.com/oso95/scroll-world
-// We keep ECHO's existing art direction/UI and use the engine ideas that matter here:
-// blob-backed seekable clips, scroll->time scrubbing, coalesced seeks, anticipatory loading,
-// iOS priming and guaranteed crossfades with no empty/black hand-off.
+// ECHO keeps its own art direction/UI while using the engine ideas that matter here:
+// scroll->time scrubbing, coalesced seeks, anticipatory loading, iOS priming and
+// readiness-gated crossfades so the outgoing ocean never disappears before the next is ready.
 
 const SCENE_BOUNDS = [0.12, 0.29, 0.46, 0.64, 0.83];
-const CROSSFADE = 0.055;
+const CROSSFADE = 0.06;
 
 function clamp(value: number, min = 0, max = 1) {
   return Math.min(max, Math.max(min, value));
@@ -43,8 +43,7 @@ function blendWeights(progress: number, ready: boolean[]) {
     const start = boundary - CROSSFADE;
     const end = boundary + CROSSFADE;
     if (progress >= start && progress <= end) {
-      const nextReady = ready[i + 1];
-      if (!nextReady) {
+      if (!ready[i + 1]) {
         weights[i] = 1;
         return weights;
       }
@@ -56,11 +55,26 @@ function blendWeights(progress: number, ready: boolean[]) {
   }
 
   const active = sceneForProgress(progress);
-  if (ready[active]) weights[active] = 1;
-  else {
-    const fallback = ready.findLastIndex(Boolean);
-    weights[fallback >= 0 ? fallback : 0] = 1;
+  if (ready[active]) {
+    weights[active] = 1;
+    return weights;
   }
+
+  for (let offset = 1; offset < ECHO_MEDIA.length; offset += 1) {
+    const previous = active - offset;
+    if (previous >= 0 && ready[previous]) {
+      weights[previous] = 1;
+      return weights;
+    }
+    const next = active + offset;
+    if (next < ECHO_MEDIA.length && ready[next]) {
+      weights[next] = 1;
+      return weights;
+    }
+  }
+
+  // Keep the first ocean layer present while the decoder paints its first frame.
+  weights[0] = 1;
   return weights;
 }
 
@@ -74,9 +88,11 @@ export default function ScrollWorldVideo({ progress, scene }: { progress: number
   const progressRef = useRef(progress);
   const [ready, setReady] = useState<boolean[]>(Array(ECHO_MEDIA.length).fill(false));
 
-  progressRef.current = progress;
-
   const weights = useMemo(() => blendWeights(progress, ready), [progress, ready]);
+
+  useEffect(() => {
+    progressRef.current = progress;
+  }, [progress]);
 
   useEffect(() => {
     let cancelled = false;
@@ -90,9 +106,12 @@ export default function ScrollWorldVideo({ progress, scene }: { progress: number
         const blob = await response.blob();
         if (cancelled) return;
         const url = URL.createObjectURL(blob);
-        objectUrls.current[index] = url;
         const video = videoRefs.current[index];
-        if (!video) return;
+        if (!video || readyRef.current[index]) {
+          URL.revokeObjectURL(url);
+          return;
+        }
+        objectUrls.current[index] = url;
         video.src = url;
         video.load();
       } catch {
@@ -100,33 +119,10 @@ export default function ScrollWorldVideo({ progress, scene }: { progress: number
       }
     };
 
-    // ScrollWorld-style anticipatory loading: current, previous and two scenes ahead.
+    // Current, previous and two scenes ahead: enough buffer for fast scroll without loading all 45 MB at once.
     [scene - 1, scene, scene + 1, scene + 2].forEach((index) => { void loadClip(index); });
-
     return () => { cancelled = true; };
   }, [scene]);
-
-  useEffect(() => {
-    // Prime the first journey legs immediately so the Koru entry never hands off to black.
-    const timer = window.setTimeout(() => {
-      [0, 1].forEach((index) => {
-        const video = videoRefs.current[index];
-        if (video && !video.src) {
-          fetch(ECHO_MEDIA[index].file)
-            .then((response) => response.ok ? response.blob() : Promise.reject())
-            .then((blob) => {
-              if (objectUrls.current[index]) return;
-              const url = URL.createObjectURL(blob);
-              objectUrls.current[index] = url;
-              video.src = url;
-              video.load();
-            })
-            .catch(() => {});
-        }
-      });
-    }, 0);
-    return () => window.clearTimeout(timer);
-  }, []);
 
   useEffect(() => {
     let raf = 0;
@@ -196,9 +192,10 @@ export default function ScrollWorldVideo({ progress, scene }: { progress: number
           key={item.id}
           ref={(node) => { videoRefs.current[index] = node; }}
           className={styles.sceneVideo}
+          src={item.file}
           muted
           playsInline
-          preload="metadata"
+          preload={Math.abs(index - scene) <= 2 ? "auto" : "metadata"}
           onLoadedData={() => markReady(index)}
           onCanPlay={() => markReady(index)}
           style={{
