@@ -147,8 +147,16 @@ main[class*="world"] div[class*="scrollLegend"] {
 /* ECHO winner-pass: hero composition and living-data presentation.
    This protects the working ScrollWorld engine and only changes visual hierarchy. */
 main[class*="world"] section[class*="overlay"] {
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  min-height: 100vh !important;
+  min-height: 100dvh !important;
   max-width: none !important;
+  overflow: hidden !important;
   text-shadow: 0 3px 24px rgba(0, 8, 18, 0.72), 0 0 32px rgba(82, 221, 255, 0.12) !important;
+  will-change: opacity, transform !important;
 }
 
 main[class*="world"] section[class*="overlay"]:first-of-type {
@@ -160,7 +168,7 @@ main[class*="world"] section[class*="overlay"]:first-of-type {
 
 main[class*="world"] section[class*="overlay"]:first-of-type::before {
   content: "";
-  position: fixed;
+  position: absolute;
   left: 50%;
   top: 47%;
   width: min(72vw, 880px);
@@ -176,11 +184,12 @@ main[class*="world"] section[class*="overlay"]:first-of-type::before {
     0 0 180px rgba(129, 70, 255, 0.08);
   pointer-events: none;
   opacity: 0.9;
+  z-index: -1;
 }
 
 main[class*="world"] section[class*="overlay"]:first-of-type::after {
   content: "SCROLL TO FOLLOW ECHO  •  TOUCH THE WATER TO REVEAL THE SIGNAL";
-  position: fixed;
+  position: absolute;
   left: 50%;
   bottom: 9.5vh;
   transform: translateX(-50%);
