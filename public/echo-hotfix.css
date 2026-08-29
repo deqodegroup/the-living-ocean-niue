@@ -1,0 +1,7 @@
+html,body{min-height:100%;margin:0;background:#02111d}
+[class*="_world_"]{min-height:100vh!important;min-height:100dvh!important;background:#02111d!important}
+[class*="_track_"]{height:760vh!important;height:760dvh!important;min-height:760vh!important;position:relative!important}
+[class*="_camera_"]{position:sticky!important;top:0!important;left:0!important;width:100%!important;height:100vh!important;height:100dvh!important;min-height:100vh!important;min-height:100dvh!important;max-height:none!important;overflow:hidden!important;background:#03172a!important;isolation:isolate!important}
+[class*="_videoWorld_"],[class*="_sceneVideo_"],[class*="_cinematicGrade_"],[class*="_caustics_"],[class*="_pointerLight_"],[class*="_particles_"],[class*="_fishField_"]{position:absolute!important;inset:0!important;width:100%!important;height:100%!important}
+[class*="_sceneVideo_"]{object-fit:cover!important;transition:opacity 1.35s cubic-bezier(.4,0,.2,1),transform .5s ease!important;background:#03172a!important}
+@media(max-width:800px){[class*="_track_"]{height:690vh!important;height:690dvh!important}}
