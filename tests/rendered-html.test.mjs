@@ -28,10 +28,10 @@ test("renders production metadata without Sites preview authentication", async (
   );
   const html = await response.text();
 
-  assert.match(html, /<title>The Living Ocean — Niue<\/title>/);
+  assert.match(html, /<title>ECHO: The Living Ocean — Niue<\/title>/);
   assert.match(
     html,
-    /<meta(?=[^>]*\bname=["']description["'])(?=[^>]*\bcontent=["']An interactive journey through Niue&#x27;s climate risk, people and resilience data\.["'])[^>]*>/i,
+    /<meta(?=[^>]*\bname=["']description["'])(?=[^>]*\bcontent=["']An immersive data journey through Niue&#x27;s living ocean, climate risk, people, place and resilience\.["'])[^>]*>/i,
   );
   assert.doesNotMatch(
     html,
