@@ -1,7 +1,7 @@
 /* ECHO ScrollWorld structural stage fix.
    Rule: the scroll track is only the invisible progress ruler; the camera is the fixed
-   full-screen ocean stage. No copy, data, palette, scene order, video source or layout
-   redesign changes live here. */
+   full-screen ocean stage. Each video now lives inside its own full-scene panel.
+   No copy, data, palette, scene order, video source or layout redesign changes live here. */
 html,
 body {
   width: 100%;
@@ -62,6 +62,21 @@ main[class*="world"] div[class*="videoWorld"] {
   overflow: hidden !important;
   background: #052d51 !important;
   z-index: 0 !important;
+}
+
+main[class*="world"] div[class*="scenePanel"] {
+  position: fixed !important;
+  inset: 0 !important;
+  display: block !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  min-width: 100vw !important;
+  min-height: 100vh !important;
+  min-height: 100dvh !important;
+  overflow: hidden !important;
+  background: #052d51 !important;
+  will-change: opacity !important;
 }
 
 main[class*="world"] video[class*="sceneVideo"] {
