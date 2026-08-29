@@ -6,20 +6,19 @@ import styles from "./echo-world.module.css";
 
 // Scroll mechanics adapted from oso95/scroll-world (MIT).
 // Source: https://github.com/oso95/scroll-world
-// Showcase rule for ECHO: every scene owns a full-viewport video panel. The
-// viewport-critical layout lives inline so the live build cannot lose the ocean
-// behind module-CSS, cascade, or static-export ordering issues.
+// Showcase rule for ECHO: every scene owns the sticky camera viewport. Video
+// panels remain inside that camera so they cannot escape above HUD/data layers.
 
 const SCENE_BOUNDS = [0.12, 0.29, 0.46, 0.64, 0.83];
 const CROSSFADE = 0.085;
 
 const viewportLayer: CSSProperties = {
-  position: "fixed",
+  position: "absolute",
   inset: 0,
-  width: "100vw",
-  height: "100vh",
-  minWidth: "100vw",
-  minHeight: "100vh",
+  width: "100%",
+  height: "100%",
+  minWidth: "100%",
+  minHeight: "100%",
   overflow: "hidden",
   pointerEvents: "none",
 };
@@ -164,7 +163,7 @@ export default function ScrollWorldVideo({ progress, scene }: { progress: number
             style={{
               ...viewportLayer,
               opacity: weight,
-              zIndex: weight > 0 ? 30 + index : 5 + index,
+              zIndex: weight > 0 ? 2 + index : 1,
               visibility: isNearby ? "visible" : "hidden",
               transition: "opacity 680ms ease, visibility 680ms ease",
               background: "transparent",
