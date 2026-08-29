@@ -137,3 +137,34 @@ main[class*="world"] div[class*="scrollLegend"] {
   position: fixed !important;
   z-index: 120 !important;
 }
+
+/* Pin only the OG navigation/HUD layer. Do not redesign hero, data, or videos. */
+main[class*="world"] header[class*="header"] {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: auto !important;
+  transform: none !important;
+  z-index: 220 !important;
+}
+
+main[class*="world"] nav[class*="progressNav"] {
+  position: fixed !important;
+  top: 50% !important;
+  right: clamp(14px, 3vw, 44px) !important;
+  left: auto !important;
+  bottom: auto !important;
+  transform: translateY(-50%) !important;
+  z-index: 220 !important;
+}
+
+main[class*="world"] div[class*="scrollLegend"] {
+  position: fixed !important;
+  left: 50% !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: 20px !important;
+  transform: translateX(-50%) !important;
+  z-index: 220 !important;
+}
