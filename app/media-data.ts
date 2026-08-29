@@ -16,7 +16,7 @@ export const ECHO_MEDIA: EchoMediaScene[] = [
   {
     id: "ocean-wall",
     title: "Ocean Wall",
-    file: "/media/echo/kie-seedance-ocean-wall-720p.mp4",
+    file: "/media/echo/kie-seedance-ocean-wall-720p(1).mp4",
     role: "Entry descent and first reveal of the living ocean",
     dataLayer: "Orientation / entry",
     locked: true,
@@ -24,7 +24,7 @@ export const ECHO_MEDIA: EchoMediaScene[] = [
   {
     id: "dolphin-current",
     title: "Dolphin Current",
-    file: "/media/echo/kie-seedance-dolphin-current-720p.mp4",
+    file: "/media/echo/kie-seedance-dolphin-current-720p(1).mp4",
     role: "Movement, life and ECHO-led travel",
     dataLayer: "Ocean movement / discovery",
     locked: true,
@@ -32,7 +32,7 @@ export const ECHO_MEDIA: EchoMediaScene[] = [
   {
     id: "reef-community",
     title: "Reef Community",
-    file: "/media/echo/kie-seedance-reef-community-720p.mp4",
+    file: "/media/echo/kie-seedance-reef-community-720p(1).mp4",
     role: "Dense fish-life ecosystem and interactive discovery",
     dataLayer: "Reef / community context",
     locked: true,
