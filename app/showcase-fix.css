@@ -60,11 +60,11 @@ main[class*="world"] div[class*="videoWorld"] {
   min-height: 100vh !important;
   min-height: 100dvh !important;
   overflow: hidden !important;
-  background: #052d51 !important;
-  z-index: 0 !important;
+  background: transparent !important;
+  z-index: 1 !important;
 }
 
-main[class*="world"] div[class*="scenePanel"] {
+main[class*="world"] .echo-scene-panel {
   position: fixed !important;
   inset: 0 !important;
   display: block !important;
@@ -75,8 +75,9 @@ main[class*="world"] div[class*="scenePanel"] {
   min-height: 100vh !important;
   min-height: 100dvh !important;
   overflow: hidden !important;
-  background: #052d51 !important;
+  background: transparent !important;
   will-change: opacity !important;
+  pointer-events: none !important;
 }
 
 main[class*="world"] video[class*="sceneVideo"] {
@@ -94,6 +95,24 @@ main[class*="world"] video[class*="sceneVideo"] {
   object-fit: cover !important;
   object-position: center center !important;
   transform-origin: center center !important;
+  z-index: 2 !important;
+}
+
+main[class*="world"] div[class*="cinematicGrade"] {
+  z-index: 60 !important;
+}
+
+main[class*="world"] div[class*="caustics"] {
+  z-index: 61 !important;
+}
+
+main[class*="world"] div[class*="pointerLight"] {
+  z-index: 62 !important;
+}
+
+main[class*="world"] div[class*="particles"],
+main[class*="world"] div[class*="fishField"] {
+  z-index: 70 !important;
 }
 
 main[class*="world"] div[class*="cinematicGrade"],
@@ -108,6 +127,7 @@ main[class*="world"] div[class*="fishField"] {
   height: 100dvh !important;
   min-height: 100vh !important;
   min-height: 100dvh !important;
+  pointer-events: none !important;
 }
 
 main[class*="world"] section[class*="overlay"],
@@ -115,4 +135,5 @@ main[class*="world"] header[class*="header"],
 main[class*="world"] nav[class*="progressNav"],
 main[class*="world"] div[class*="scrollLegend"] {
   position: fixed !important;
+  z-index: 120 !important;
 }
