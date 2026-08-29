@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./showcase-fix.css";
 
 const publicSiteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ??
