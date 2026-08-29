@@ -100,10 +100,16 @@ main[class*="world"] video[class*="sceneVideo"] {
 
 main[class*="world"] div[class*="cinematicGrade"] {
   z-index: 60 !important;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(126, 245, 255, 0.18), transparent 32%),
+    radial-gradient(circle at 22% 54%, rgba(31, 151, 255, 0.18), transparent 38%),
+    radial-gradient(circle at 82% 65%, rgba(183, 80, 255, 0.14), transparent 34%),
+    linear-gradient(180deg, rgba(1, 9, 24, 0.06), rgba(0, 18, 39, 0.24) 58%, rgba(0, 8, 21, 0.56)) !important;
 }
 
 main[class*="world"] div[class*="caustics"] {
   z-index: 61 !important;
+  opacity: 0.52 !important;
 }
 
 main[class*="world"] div[class*="pointerLight"] {
@@ -136,4 +142,181 @@ main[class*="world"] nav[class*="progressNav"],
 main[class*="world"] div[class*="scrollLegend"] {
   position: fixed !important;
   z-index: 120 !important;
+}
+
+/* ECHO winner-pass: hero composition and living-data presentation.
+   This protects the working ScrollWorld engine and only changes visual hierarchy. */
+main[class*="world"] section[class*="overlay"] {
+  max-width: none !important;
+  text-shadow: 0 3px 24px rgba(0, 8, 18, 0.72), 0 0 32px rgba(82, 221, 255, 0.12) !important;
+}
+
+main[class*="world"] section[class*="overlay"]:first-of-type {
+  align-items: center !important;
+  text-align: center !important;
+  padding-top: 7vh !important;
+  justify-content: center !important;
+}
+
+main[class*="world"] section[class*="overlay"]:first-of-type::before {
+  content: "";
+  position: fixed;
+  left: 50%;
+  top: 47%;
+  width: min(72vw, 880px);
+  height: min(72vw, 880px);
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle, rgba(107, 239, 255, 0.13), transparent 42%),
+    radial-gradient(circle, rgba(190, 83, 255, 0.08), transparent 61%);
+  box-shadow:
+    inset 0 0 90px rgba(117, 244, 255, 0.08),
+    0 0 90px rgba(91, 233, 255, 0.12),
+    0 0 180px rgba(129, 70, 255, 0.08);
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+main[class*="world"] section[class*="overlay"]:first-of-type::after {
+  content: "SCROLL TO FOLLOW ECHO  •  TOUCH THE WATER TO REVEAL THE SIGNAL";
+  position: fixed;
+  left: 50%;
+  bottom: 9.5vh;
+  transform: translateX(-50%);
+  padding: 10px 16px;
+  border: 1px solid rgba(139, 244, 255, 0.28);
+  border-radius: 999px;
+  background: rgba(2, 24, 47, 0.24);
+  backdrop-filter: blur(14px);
+  color: rgba(220, 250, 255, 0.84);
+  font-size: 8px;
+  letter-spacing: 0.22em;
+  white-space: nowrap;
+  box-shadow: 0 0 28px rgba(91, 233, 255, 0.08), inset 0 0 22px rgba(91, 233, 255, 0.04);
+  pointer-events: none;
+}
+
+main[class*="world"] section[class*="overlay"] h1 {
+  font-size: clamp(84px, 17vw, 220px) !important;
+  line-height: 0.72 !important;
+  letter-spacing: -0.075em !important;
+  color: rgba(248, 254, 255, 0.96) !important;
+  text-shadow:
+    0 0 20px rgba(91, 233, 255, 0.18),
+    0 0 90px rgba(54, 180, 255, 0.12),
+    0 8px 34px rgba(0, 8, 22, 0.72) !important;
+}
+
+main[class*="world"] section[class*="overlay"] h2 {
+  max-width: 780px !important;
+  font-size: clamp(36px, 5.7vw, 86px) !important;
+  color: rgba(240, 253, 255, 0.92) !important;
+}
+
+main[class*="world"] p[class*="eyebrow"] {
+  color: #9bf8ff !important;
+  text-shadow: 0 0 16px rgba(91, 233, 255, 0.72), 0 0 34px rgba(164, 86, 255, 0.24) !important;
+}
+
+main[class*="world"] button[class*="enter"] {
+  width: clamp(150px, 15vw, 210px) !important;
+  height: clamp(150px, 15vw, 210px) !important;
+  margin-top: 26px !important;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(255, 255, 255, 0.18), rgba(141, 77, 255, 0.12) 34%, rgba(91, 233, 255, 0.06) 58%, transparent 74%) !important;
+  box-shadow:
+    0 0 34px rgba(91, 233, 255, 0.20),
+    0 0 74px rgba(169, 84, 255, 0.16),
+    inset 0 0 46px rgba(91, 233, 255, 0.07) !important;
+}
+
+main[class*="world"] svg[class*="koruMark"] {
+  width: clamp(92px, 9vw, 128px) !important;
+  height: clamp(92px, 9vw, 128px) !important;
+  stroke: #d76cff !important;
+  filter: drop-shadow(0 0 10px rgba(229, 54, 120, 0.95)) drop-shadow(0 0 28px rgba(91, 233, 255, 0.72)) !important;
+}
+
+main[class*="world"] p[class*="heroLine"] {
+  bottom: 16vh !important;
+  color: rgba(236, 253, 255, 0.88) !important;
+  letter-spacing: 0.42em !important;
+}
+
+main[class*="world"] div[class*="scrollLegend"] {
+  opacity: 0.58 !important;
+  bottom: 4.8vh !important;
+}
+
+main[class*="world"] div[class*="signalCard"],
+main[class*="world"] div[class*="microSignal"],
+main[class*="world"] button[class*="villageSignal"] {
+  border: 1px solid rgba(134, 244, 255, 0.42) !important;
+  background:
+    linear-gradient(135deg, rgba(2, 40, 72, 0.42), rgba(12, 23, 64, 0.36) 48%, rgba(98, 35, 140, 0.20)) !important;
+  backdrop-filter: blur(18px) saturate(1.18) !important;
+  box-shadow:
+    0 22px 80px rgba(0, 15, 42, 0.36),
+    inset 0 0 44px rgba(91, 233, 255, 0.055),
+    0 0 34px rgba(91, 233, 255, 0.11) !important;
+}
+
+main[class*="world"] div[class*="signalCard"] {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+main[class*="world"] div[class*="signalCard"]::before {
+  content: "LIVING DATA SIGNAL";
+  position: absolute;
+  right: 18px;
+  top: 14px;
+  color: rgba(154, 247, 255, 0.42);
+  font-size: 7px;
+  letter-spacing: 0.18em;
+}
+
+main[class*="world"] div[class*="signalCard"]::after {
+  content: "";
+  position: absolute;
+  inset: auto -20% -38% -20%;
+  height: 80%;
+  background: radial-gradient(ellipse at 50% 50%, rgba(91, 233, 255, 0.14), transparent 62%);
+  pointer-events: none;
+}
+
+main[class*="world"] div[class*="microSignal"] strong {
+  color: #a6fbff !important;
+  text-shadow: 0 0 18px rgba(91, 233, 255, 0.82), 0 0 48px rgba(176, 86, 255, 0.32) !important;
+}
+
+main[class*="world"] button[class*="discoveryButton"],
+main[class*="world"] button[class*="finalButton"] {
+  border-radius: 999px !important;
+  background: rgba(2, 35, 65, 0.34) !important;
+  box-shadow: 0 0 26px rgba(91, 233, 255, 0.08), inset 0 0 24px rgba(91, 233, 255, 0.045) !important;
+}
+
+main[class*="world"] button[class*="discoveryButton"]::after {
+  content: "  •  fish-triggered";
+  color: rgba(151, 247, 255, 0.72);
+}
+
+@media (max-width: 760px) {
+  main[class*="world"] nav[class*="progressNav"] {
+    display: none !important;
+  }
+
+  main[class*="world"] section[class*="overlay"] {
+    padding-left: 22px !important;
+    padding-right: 22px !important;
+  }
+
+  main[class*="world"] section[class*="overlay"]:first-of-type::after {
+    width: calc(100vw - 42px);
+    white-space: normal;
+    text-align: center;
+    line-height: 1.5;
+  }
 }
