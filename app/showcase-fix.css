@@ -21,7 +21,7 @@ main[class*="world"] {
   min-height: 760vh !important;
   min-height: 760dvh !important;
   overflow-x: clip !important;
-  background: #02111d !important;
+  background: transparent !important;
 }
 
 main[class*="world"] > div[class*="track"] {
@@ -29,6 +29,8 @@ main[class*="world"] > div[class*="track"] {
   min-height: 760vh !important;
   min-height: 760dvh !important;
   background: transparent !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
 }
 
 main[class*="world"] > div[class*="track"] > div[class*="camera"] {
@@ -37,33 +39,43 @@ main[class*="world"] > div[class*="track"] > div[class*="camera"] {
   width: 100vw !important;
   height: 100vh !important;
   height: 100dvh !important;
+  min-width: 100vw !important;
   min-height: 100vh !important;
   min-height: 100dvh !important;
   overflow: hidden !important;
   background: #052d51 !important;
   isolation: isolate !important;
   contain: paint !important;
-  z-index: 0 !important;
+  z-index: 999 !important;
+  pointer-events: auto !important;
 }
 
 main[class*="world"] div[class*="videoWorld"] {
-  position: absolute !important;
+  position: fixed !important;
   inset: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  min-height: 100% !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  min-width: 100vw !important;
+  min-height: 100vh !important;
+  min-height: 100dvh !important;
   overflow: hidden !important;
   background: #052d51 !important;
   z-index: 0 !important;
 }
 
 main[class*="world"] video[class*="sceneVideo"] {
-  position: absolute !important;
+  position: fixed !important;
   inset: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  min-width: 100% !important;
-  min-height: 100% !important;
+  display: block !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  min-width: 100vw !important;
+  min-height: 100vh !important;
+  min-height: 100dvh !important;
+  max-width: none !important;
+  max-height: none !important;
   object-fit: cover !important;
   object-position: center center !important;
   transform-origin: center center !important;
@@ -74,16 +86,18 @@ main[class*="world"] div[class*="caustics"],
 main[class*="world"] div[class*="pointerLight"],
 main[class*="world"] div[class*="particles"],
 main[class*="world"] div[class*="fishField"] {
-  position: absolute !important;
+  position: fixed !important;
   inset: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  min-height: 100% !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  min-height: 100vh !important;
+  min-height: 100dvh !important;
 }
 
 main[class*="world"] section[class*="overlay"],
 main[class*="world"] header[class*="header"],
 main[class*="world"] nav[class*="progressNav"],
 main[class*="world"] div[class*="scrollLegend"] {
-  position: absolute !important;
+  position: fixed !important;
 }
