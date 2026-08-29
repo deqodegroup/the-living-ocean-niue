@@ -1,21 +1,79 @@
 /* ECHO showcase scroll containment fix.
-   Keep the living-ocean camera sticky to the viewport by avoiding a non-scrolling overflow ancestor. */
+   Keep the living-ocean camera and video world covering the full viewport.
+   This file is intentionally surgical: no copy, data, colour palette, scene order or layout redesign. */
 html,
 body {
-  overflow-x: clip;
+  width: 100%;
+  min-height: 100%;
+  overflow-x: clip !important;
+  background: #02111d;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100svh;
 }
 
 main[class*="world"] {
+  min-height: 100vh !important;
+  min-height: 100svh !important;
   overflow-x: clip !important;
+  background: #02111d !important;
+}
+
+main[class*="world"] > div[class*="track"] {
+  min-height: 760vh !important;
+  min-height: 760svh !important;
 }
 
 main[class*="world"] > div[class*="track"] > div[class*="camera"] {
   position: sticky !important;
   top: 0 !important;
-  width: 100% !important;
+  left: 0 !important;
+  width: 100vw !important;
   height: 100vh !important;
-  height: 100dvh !important;
+  height: 100svh !important;
   min-height: 100vh !important;
-  min-height: 100dvh !important;
+  min-height: 100svh !important;
+  overflow: clip !important;
+  background: #052d51 !important;
+  contain: paint !important;
+}
+
+main[class*="world"] div[class*="videoWorld"] {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  height: 100svh !important;
+  min-height: 100vh !important;
+  min-height: 100svh !important;
   overflow: hidden !important;
+}
+
+main[class*="world"] video[class*="sceneVideo"] {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  height: 100svh !important;
+  min-height: 100vh !important;
+  min-height: 100svh !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  transform-origin: center center !important;
+  transform: scale(1.22) translate3d(var(--parallax-x, 0px), calc(var(--parallax-y, 0px) + 3vh), 0) !important;
+}
+
+main[class*="world"] div[class*="cinematicGrade"],
+main[class*="world"] div[class*="caustics"],
+main[class*="world"] div[class*="pointerLight"],
+main[class*="world"] div[class*="particles"],
+main[class*="world"] div[class*="fishField"] {
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  height: 100svh !important;
+  min-height: 100vh !important;
+  min-height: 100svh !important;
 }
