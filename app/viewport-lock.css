@@ -1,31 +1,41 @@
 /* ECHO P0 viewport lock
-   Pin the cinematic camera to the browser while the long journey track drives progress underneath it. */
+   Vite's CSS modules do not preserve the Next-style `echo-world_*` class prefix.
+   Match the stable local class-name tokens emitted by this build instead. */
 html,
-body {
+body,
+#root {
   width: 100%;
   min-height: 100%;
   margin: 0;
+}
+
+html,
+body {
+  background: #020b18;
 }
 
 body {
   overflow-x: clip;
 }
 
-[class*="echo-world_world__"] {
-  width: 100%;
+/* Match both dev-readable and production CSS-module class names where available. */
+[class*="world"],
+[class*="World"] {
   min-height: 100vh;
   min-height: 100dvh;
 }
 
-[class*="echo-world_track__"] {
+[class*="track"],
+[class*="Track"] {
   position: relative;
   width: 100%;
 }
 
-/* Fixed — not sticky. This removes ancestor/overflow interactions that can expose the scroll track. */
-[class*="echo-world_camera__"] {
+[class*="camera"],
+[class*="Camera"] {
   position: fixed !important;
   inset: 0 !important;
+  z-index: 1 !important;
   width: 100vw !important;
   height: 100vh !important;
   height: 100dvh !important;
@@ -33,35 +43,40 @@ body {
   min-height: 100dvh !important;
   max-height: none !important;
   overflow: hidden !important;
-  z-index: 0;
 }
 
-[class*="echo-world_videoWorld__"] {
+[class*="videoWorld"],
+[class*="VideoWorld"] {
   position: absolute !important;
   inset: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  overflow: hidden !important;
 }
 
-[class*="echo-world_sceneVideo__"] {
+video[class*="sceneVideo"],
+video[class*="SceneVideo"],
+[class*="videoWorld"] video,
+[class*="VideoWorld"] video {
   position: absolute !important;
   inset: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  min-width: 100% !important;
-  min-height: 100% !important;
+  display: block !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  min-width: 100vw !important;
+  min-height: 100vh !important;
   object-fit: cover !important;
 }
 
-@supports (height: 100svh) {
-  [class*="echo-world_camera__"] {
-    height: 100svh !important;
-    min-height: 100svh !important;
-  }
-}
-
 @media (min-width: 769px) {
-  [class*="echo-world_camera__"] {
+  [class*="camera"],
+  [class*="Camera"],
+  [class*="videoWorld"],
+  [class*="VideoWorld"],
+  [class*="videoWorld"] video,
+  [class*="VideoWorld"] video {
     height: 100vh !important;
     min-height: 100vh !important;
   }
