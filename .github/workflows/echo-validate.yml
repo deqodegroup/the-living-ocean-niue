@@ -1,0 +1,45 @@
+name: ECHO Validate
+
+on:
+  push:
+    branches:
+      - echo-scrollworld-final
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.13.0'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify locked media files
+        run: |
+          test -f 'public/media/echo/kie-seedance-ocean-wall-720p(1).mp4'
+          test -f 'public/media/echo/kie-seedance-dolphin-current-720p(1).mp4'
+          test -f 'public/media/echo/kie-seedance-reef-community-720p(1).mp4'
+          test -f 'public/media/echo/kie-seedance-changing-ocean-v2-720p.mp4'
+          test -f 'public/media/echo/kie-seedance-memory-cavern-v2-720p.mp4'
+          test -f 'public/media/echo/kie-seedance-protected-future-720p.mp4'
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Tests
+        run: npm test
+
+      - name: Pages build check
+        run: npm run check:pages
