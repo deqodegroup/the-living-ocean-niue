@@ -1,68 +1,72 @@
-/* ECHO showcase scroll containment fix.
-   Keep the living-ocean camera and video world covering the full viewport.
-   This file is intentionally surgical: no copy, data, colour palette, scene order or layout redesign. */
+/* ECHO ScrollWorld structural stage fix.
+   Rule: the scroll track is only the invisible progress ruler; the camera is the fixed
+   full-screen ocean stage. No copy, data, palette, scene order, video source or layout
+   redesign changes live here. */
 html,
 body {
   width: 100%;
   min-height: 100%;
+  margin: 0;
   overflow-x: clip !important;
   background: #02111d;
 }
 
 body {
   min-height: 100vh;
-  min-height: 100svh;
+  min-height: 100dvh;
 }
 
 main[class*="world"] {
-  min-height: 100vh !important;
-  min-height: 100svh !important;
+  position: relative !important;
+  min-height: 760vh !important;
+  min-height: 760dvh !important;
   overflow-x: clip !important;
   background: #02111d !important;
 }
 
 main[class*="world"] > div[class*="track"] {
+  position: relative !important;
   min-height: 760vh !important;
-  min-height: 760svh !important;
+  min-height: 760dvh !important;
+  background: transparent !important;
 }
 
 main[class*="world"] > div[class*="track"] > div[class*="camera"] {
-  position: sticky !important;
-  top: 0 !important;
-  left: 0 !important;
+  position: fixed !important;
+  inset: 0 !important;
   width: 100vw !important;
   height: 100vh !important;
-  height: 100svh !important;
+  height: 100dvh !important;
   min-height: 100vh !important;
-  min-height: 100svh !important;
-  overflow: clip !important;
+  min-height: 100dvh !important;
+  overflow: hidden !important;
   background: #052d51 !important;
+  isolation: isolate !important;
   contain: paint !important;
+  z-index: 0 !important;
 }
 
 main[class*="world"] div[class*="videoWorld"] {
   position: absolute !important;
   inset: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  height: 100svh !important;
-  min-height: 100vh !important;
-  min-height: 100svh !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 100% !important;
   overflow: hidden !important;
+  background: #052d51 !important;
+  z-index: 0 !important;
 }
 
 main[class*="world"] video[class*="sceneVideo"] {
   position: absolute !important;
   inset: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  height: 100svh !important;
-  min-height: 100vh !important;
-  min-height: 100svh !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 100% !important;
+  min-height: 100% !important;
   object-fit: cover !important;
   object-position: center center !important;
   transform-origin: center center !important;
-  transform: scale(1.22) translate3d(var(--parallax-x, 0px), calc(var(--parallax-y, 0px) + 3vh), 0) !important;
 }
 
 main[class*="world"] div[class*="cinematicGrade"],
@@ -70,10 +74,16 @@ main[class*="world"] div[class*="caustics"],
 main[class*="world"] div[class*="pointerLight"],
 main[class*="world"] div[class*="particles"],
 main[class*="world"] div[class*="fishField"] {
+  position: absolute !important;
   inset: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  height: 100svh !important;
-  min-height: 100vh !important;
-  min-height: 100svh !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 100% !important;
+}
+
+main[class*="world"] section[class*="overlay"],
+main[class*="world"] header[class*="header"],
+main[class*="world"] nav[class*="progressNav"],
+main[class*="world"] div[class*="scrollLegend"] {
+  position: absolute !important;
 }
