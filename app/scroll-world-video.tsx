@@ -1,17 +1,28 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type CSSProperties } from "react";
 import { ECHO_MEDIA } from "./media-data";
 import styles from "./echo-world.module.css";
 
 // Scroll mechanics adapted from oso95/scroll-world (MIT).
 // Source: https://github.com/oso95/scroll-world
-// Showcase rule for ECHO: every scene owns a full-viewport video panel. Scroll
-// progress chooses the dominant panel, while muted inline playback guarantees
-// each visible panel paints a real video frame instead of falling back to the wall.
+// Showcase rule for ECHO: every scene owns a full-viewport video panel. The
+// viewport-critical layout lives inline so the live build cannot lose the ocean
+// behind module-CSS, cascade, or static-export ordering issues.
 
 const SCENE_BOUNDS = [0.12, 0.29, 0.46, 0.64, 0.83];
 const CROSSFADE = 0.085;
+
+const viewportLayer: CSSProperties = {
+  position: "fixed",
+  inset: 0,
+  width: "100vw",
+  height: "100vh",
+  minWidth: "100vw",
+  minHeight: "100vh",
+  overflow: "hidden",
+  pointerEvents: "none",
+};
 
 function clamp(value: number, min = 0, max = 1) {
   return Math.min(max, Math.max(min, value));
@@ -131,7 +142,16 @@ export default function ScrollWorldVideo({ progress, scene }: { progress: number
   }, []);
 
   return (
-    <div className={styles.videoWorld} aria-hidden="true" data-scene={scene}>
+    <div
+      className={styles.videoWorld}
+      aria-hidden="true"
+      data-scene={scene}
+      style={{
+        ...viewportLayer,
+        zIndex: 1,
+        background: "transparent",
+      }}
+    >
       {ECHO_MEDIA.map((item, index) => {
         const weight = weights[index];
         const isNearby = weight > 0 || Math.abs(index - scene) <= 1;
@@ -142,10 +162,12 @@ export default function ScrollWorldVideo({ progress, scene }: { progress: number
             className="echo-scene-panel"
             data-scene-panel={item.id}
             style={{
+              ...viewportLayer,
               opacity: weight,
               zIndex: weight > 0 ? 30 + index : 5 + index,
               visibility: isNearby ? "visible" : "hidden",
               transition: "opacity 680ms ease, visibility 680ms ease",
+              background: "transparent",
             }}
           >
             <video
@@ -158,6 +180,16 @@ export default function ScrollWorldVideo({ progress, scene }: { progress: number
               playsInline
               preload="auto"
               style={{
+                position: "absolute",
+                inset: 0,
+                display: "block",
+                width: "100%",
+                height: "100%",
+                minWidth: "100%",
+                minHeight: "100%",
+                objectFit: "cover",
+                objectPosition: "center center",
+                transformOrigin: "center center",
                 transform: `scale(${1.08 + progress * 0.025}) translate3d(var(--parallax-x,0px),var(--parallax-y,0px),0)`,
               }}
             />
