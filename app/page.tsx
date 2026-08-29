@@ -9,9 +9,23 @@ import styles from "./echo-world.module.css";
 
 const SCENE_STOPS = [0.04, 0.19, 0.37, 0.55, 0.74, 0.93];
 const SCENE_BOUNDS = [0.12, 0.29, 0.46, 0.64, 0.83];
+const OVERLAY_FADE = 0.065;
 
 function clamp(value: number, min = 0, max = 1) {
   return Math.min(max, Math.max(min, value));
+}
+
+function smoothstep(start: number, end: number, value: number) {
+  const x = clamp((value - start) / Math.max(0.001, end - start));
+  return x * x * (3 - 2 * x);
+}
+
+function scenePresence(progress: number, index: number) {
+  const start = index === 0 ? 0 : SCENE_BOUNDS[index - 1];
+  const end = index === ECHO_MEDIA.length - 1 ? 1 : SCENE_BOUNDS[index];
+  const fadeIn = index === 0 ? 1 : smoothstep(start - OVERLAY_FADE, start + OVERLAY_FADE, progress);
+  const fadeOut = index === ECHO_MEDIA.length - 1 ? 1 : 1 - smoothstep(end - OVERLAY_FADE, end + OVERLAY_FADE, progress);
+  return clamp(fadeIn * fadeOut);
 }
 
 function Koru() {
@@ -137,6 +151,17 @@ export default function Home() {
     return 5;
   }, [progress]);
   const reefSignalVisible = discovered || (activeScene === 2 && progress > 0.40);
+  const overlayProps = (index: number): { className: string; style: CSSProperties } => {
+    const presence = scenePresence(progress, index);
+    return {
+      className: presence > 0.035 ? styles.visible : "",
+      style: {
+        opacity: presence,
+        pointerEvents: presence > 0.82 ? "auto" : "none",
+        transform: `translate3d(0, ${(1 - presence) * 22}px, 0) scale(${0.985 + presence * 0.015})`,
+      },
+    };
+  };
 
   useEffect(() => {
     let ticking = false;
@@ -191,6 +216,13 @@ export default function Home() {
     setTimeout(() => travelTo(.16), 220);
   };
 
+  const scene0 = overlayProps(0);
+  const scene1 = overlayProps(1);
+  const scene2 = overlayProps(2);
+  const scene3 = overlayProps(3);
+  const scene4 = overlayProps(4);
+  const scene5 = overlayProps(5);
+
   return (
     <main className={styles.world}>
       <div ref={trackRef} className={styles.track}>
@@ -201,25 +233,25 @@ export default function Home() {
           <EchoGuide scene={activeScene} progress={progress} entered={entered} />
           <header className={styles.header}><button onClick={() => travelTo(0)} className={styles.brand}>ECHO <span>THE LIVING OCEAN — NIUE</span></button><button className={styles.sourcesButton} onClick={() => setSourcesOpen(true)}>Sources</button></header>
           <nav className={styles.progressNav} aria-label="Journey scenes">{ECHO_MEDIA.map((item, index) => <button key={item.id} className={activeScene === index ? styles.navActive : ""} onClick={() => { setEntered(true); travelTo(SCENE_STOPS[index]); }}><i /><span>{item.title}</span></button>)}</nav>
-          <section className={`${styles.overlay} ${activeScene === 0 ? styles.visible : ""}`}>
+          <section className={`${styles.overlay} ${scene0.className}`} style={scene0.style}>
             <p className={styles.eyebrow}>Pacific Dataviz Challenge 2026</p><h1>ECHO</h1><h2>THE LIVING OCEAN — NIUE</h2>
             <button className={styles.enter} onClick={enter}><span className={styles.koruAura} /><Koru /><strong>TOUCH THE KORU TO ENTER</strong></button><p className={styles.heroLine}>THE OCEAN IS ALIVE</p>
           </section>
-          <section className={`${styles.overlay} ${styles.storyLeft} ${activeScene === 1 ? styles.visible : ""}`}>
+          <section className={`${styles.overlay} ${styles.storyLeft} ${scene1.className}`} style={scene1.style}>
             <p className={styles.eyebrow}>Dolphin Current</p><h2>Follow the current.</h2><p>ECHO moves with the ocean. Scroll to travel. Move the mouse or touch the water to explore.</p>
           </section>
-          <section className={`${styles.overlay} ${styles.storyRight} ${activeScene === 2 ? styles.visible : ""}`}>
+          <section className={`${styles.overlay} ${styles.storyRight} ${scene2.className}`} style={scene2.style}>
             <p className={styles.eyebrow}>Reef Community</p><h2>Life gathers here.</h2><p>Move through the school. The reef reacts — and the signal hidden inside the living ocean reveals itself.</p>
             <button className={styles.discoveryButton} onClick={() => setDiscovered((value) => !value)}>Reveal reef signal</button>
             <div className={`${styles.microSignal} ${reefSignalVisible ? styles.revealed : ""}`}><strong>+0.58°C</strong><span>Difference between the 1990s mean and the 2016–2025 mean</span></div>
           </section>
-          <section className={`${styles.overlay} ${styles.storyLeft} ${activeScene === 3 ? styles.visible : ""}`}>
+          <section className={`${styles.overlay} ${styles.storyLeft} ${scene3.className}`} style={scene3.style}>
             <p className={styles.eyebrow}>Changing Ocean</p><h2>The signal is in the water.</h2><p>Across the SPC record, Niue&apos;s 2016–2025 mean sea-surface temperature anomaly is 0.58°C warmer than the 1990s mean.</p><SstSignal />
           </section>
-          <section className={`${styles.overlay} ${styles.storyRight} ${activeScene === 4 ? styles.visible : ""}`}>
+          <section className={`${styles.overlay} ${styles.storyRight} ${scene4.className}`} style={scene4.style}>
             <p className={styles.eyebrow}>Memory Cavern</p><h2>People. Place. Memory.</h2><p>ECHO quietens here. Move closer and the island begins to speak.</p><VillageSignal onDiscover={() => setDiscovered(true)} />
           </section>
-          <section className={`${styles.overlay} ${styles.storyLeft} ${activeScene === 5 ? styles.visible : ""}`}>
+          <section className={`${styles.overlay} ${styles.storyLeft} ${scene5.className}`} style={scene5.style}>
             <p className={styles.eyebrow}>Protected Future</p><h2>Abundance is the destination.</h2><p>A living ocean is not a backdrop. It is food, culture, protection, identity and possibility.</p><button className={styles.finalButton} onClick={() => setSourcesOpen(true)}>Explore the evidence</button>
           </section>
           <div className={styles.scrollLegend}>SCROLL = TRAVEL <i /> MOUSE / TOUCH = EXPLORE <i /> FOLLOW ECHO</div>
