@@ -45,7 +45,11 @@ function SstSignal() {
 function FishSchool({ scene }: { scene: number }) {
   const density = [18, 30, 50, 34, 16, 46][scene] ?? 24;
   return (
-    <div className={styles.fishField} aria-hidden="true">
+    <div
+      className={styles.fishField}
+      aria-hidden="true"
+      style={{ transform: "translate3d(var(--fish-drift-x,0px),var(--fish-drift-y,0px),0)" }}
+    >
       {Array.from({ length: density }, (_, index) => {
         const x = (index * 37 + scene * 11) % 100;
         const y = 12 + ((index * 53 + scene * 17) % 74);
@@ -175,13 +179,24 @@ export default function Home() {
       root.style.setProperty("--pointer-y", `${py}%`);
       root.style.setProperty("--parallax-x", `${(50 - px) * .11}px`);
       root.style.setProperty("--parallax-y", `${(50 - py) * .075}px`);
+      root.style.setProperty("--fish-drift-x", `${(50 - px) * .05}px`);
+      root.style.setProperty("--fish-drift-y", `${(50 - py) * .035}px`);
+
+      // Reef discovery is now environmental: investigate the living school and the data wakes up.
+      if (activeScene === 2 && px > 28 && px < 78 && py > 22 && py < 80) setDiscovered(true);
+      if (activeScene === 4 && px > 18 && px < 72 && py > 24 && py < 84) setDiscovered(true);
     };
     const pointer = (e: PointerEvent) => move(e.clientX, e.clientY);
     const touch = (e: TouchEvent) => { if (e.touches[0]) move(e.touches[0].clientX, e.touches[0].clientY); };
     window.addEventListener("pointermove", pointer, { passive: true });
     window.addEventListener("touchmove", touch, { passive: true });
     return () => { window.removeEventListener("pointermove", pointer); window.removeEventListener("touchmove", touch); };
-  }, []);
+  }, [activeScene]);
+
+  useEffect(() => {
+    // Preserve discoverability for keyboard/reduced-interaction users without making a button the primary mechanic.
+    if (activeScene === 2 && progress > 0.40) setDiscovered(true);
+  }, [activeScene, progress]);
 
   const travelTo = (value: number) => {
     const track = trackRef.current;
@@ -221,13 +236,13 @@ export default function Home() {
           </section>
 
           <section className={`${styles.overlay} ${styles.storyRight} ${activeScene === 2 ? styles.visible : ""}`}>
-            <p className={styles.eyebrow}>Reef Community</p><h2>Life gathers here.</h2><p>Fish are not decoration. Their movement becomes the interface — approach, part the school, reveal what the reef remembers.</p>
-            <button className={styles.discoveryButton} onClick={() => setDiscovered((value) => !value)}>Awaken reef signal</button>
-            <div className={`${styles.microSignal} ${discovered ? styles.revealed : ""}`}><strong>+0.58°C</strong><span>Change between 1990s and 2016–2025 decade means</span></div>
+            <p className={styles.eyebrow}>Reef Community</p><h2>Life gathers here.</h2><p>Move through the school. The reef reacts — and the signal hidden inside the living ocean reveals itself.</p>
+            <button className={styles.discoveryButton} onClick={() => setDiscovered((value) => !value)}>Reveal reef signal</button>
+            <div className={`${styles.microSignal} ${discovered ? styles.revealed : ""}`}><strong>+0.58°C</strong><span>Difference between the 1990s mean and the 2016–2025 mean</span></div>
           </section>
 
           <section className={`${styles.overlay} ${styles.storyLeft} ${activeScene === 3 ? styles.visible : ""}`}>
-            <p className={styles.eyebrow}>Changing Ocean</p><h2>The signal is in the water.</h2><SstSignal />
+            <p className={styles.eyebrow}>Changing Ocean</p><h2>The signal is in the water.</h2><p>Across the SPC record, Niue&apos;s 2016–2025 mean sea-surface temperature anomaly is 0.58°C warmer than the 1990s mean.</p><SstSignal />
           </section>
 
           <section className={`${styles.overlay} ${styles.storyRight} ${activeScene === 4 ? styles.visible : ""}`}>
