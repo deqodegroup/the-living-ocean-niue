@@ -1,83 +1,14 @@
-/* ECHO P0 viewport lock
-   Vite's CSS modules do not preserve the Next-style `echo-world_*` class prefix.
-   Match the stable local class-name tokens emitted by this build instead. */
-html,
-body,
-#root {
-  width: 100%;
-  min-height: 100%;
-  margin: 0;
-}
-
-html,
-body {
-  background: #020b18;
-}
-
-body {
-  overflow-x: clip;
-}
-
-/* Match both dev-readable and production CSS-module class names where available. */
-[class*="world"],
-[class*="World"] {
-  min-height: 100vh;
-  min-height: 100dvh;
-}
-
-[class*="track"],
-[class*="Track"] {
-  position: relative;
-  width: 100%;
-}
-
-[class*="camera"],
-[class*="Camera"] {
-  position: fixed !important;
-  inset: 0 !important;
-  z-index: 1 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  height: 100dvh !important;
-  min-height: 100vh !important;
-  min-height: 100dvh !important;
-  max-height: none !important;
-  overflow: hidden !important;
-}
-
-[class*="videoWorld"],
-[class*="VideoWorld"] {
-  position: absolute !important;
-  inset: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  height: 100dvh !important;
-  overflow: hidden !important;
-}
-
-video[class*="sceneVideo"],
-video[class*="SceneVideo"],
-[class*="videoWorld"] video,
-[class*="VideoWorld"] video {
-  position: absolute !important;
-  inset: 0 !important;
-  display: block !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  height: 100dvh !important;
-  min-width: 100vw !important;
-  min-height: 100vh !important;
-  object-fit: cover !important;
-}
-
-@media (min-width: 769px) {
-  [class*="camera"],
-  [class*="Camera"],
-  [class*="videoWorld"],
-  [class*="VideoWorld"],
-  [class*="videoWorld"] video,
-  [class*="VideoWorld"] video {
-    height: 100vh !important;
-    min-height: 100vh !important;
-  }
-}
+/* ECHO viewport architecture — exact DOM hooks, no generated-class guessing. */
+html,body,#root{width:100%;min-height:100%;margin:0;background:#020b18}body{overflow-x:clip}
+#echo-world{position:relative;width:100%;min-height:100vh;min-height:100dvh;overflow:visible!important}
+#echo-track{position:relative;width:100%;min-height:760vh}
+#echo-camera{position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;height:100dvh!important;min-height:100vh!important;max-height:none!important;overflow:hidden!important;background:#052d51!important;isolation:isolate;z-index:1!important}
+#echo-ocean-layer,#echo-life-layer,#echo-ui-layer{position:absolute;inset:0;width:100%;height:100%;overflow:hidden}
+#echo-ocean-layer{z-index:0;background:radial-gradient(circle at 50% 28%,#0877b9 0,#06365d 38%,#031a31 76%)}
+#echo-ocean-layer>div{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:100%!important}
+#echo-ocean-layer video{position:absolute!important;inset:0!important;display:block!important;width:100%!important;height:100%!important;min-width:100%!important;min-height:100%!important;object-fit:cover!important}
+#echo-life-layer{z-index:10;pointer-events:none}
+#echo-ui-layer{z-index:20;pointer-events:none}
+#echo-ui-layer button,#echo-ui-layer a{pointer-events:auto}
+@supports(height:100svh){#echo-camera{height:100svh!important;min-height:100svh!important}}
+@media(min-width:769px){#echo-camera{height:100vh!important;min-height:100vh!important}}
