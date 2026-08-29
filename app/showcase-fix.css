@@ -1,0 +1,21 @@
+/* ECHO showcase scroll containment fix.
+   Keep the living-ocean camera sticky to the viewport by avoiding a non-scrolling overflow ancestor. */
+html,
+body {
+  overflow-x: clip;
+}
+
+main[class*="world"] {
+  overflow-x: clip !important;
+}
+
+main[class*="world"] > div[class*="track"] > div[class*="camera"] {
+  position: sticky !important;
+  top: 0 !important;
+  width: 100% !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  min-height: 100vh !important;
+  min-height: 100dvh !important;
+  overflow: hidden !important;
+}
