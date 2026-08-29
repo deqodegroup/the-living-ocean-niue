@@ -42,6 +42,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
+      <head>
+        <link rel="stylesheet" href="./echo-hotfix.css" />
+      </head>
       <body className="antialiased">{children}</body>
     </html>
   );
