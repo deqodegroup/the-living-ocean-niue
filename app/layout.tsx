@@ -48,11 +48,6 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <head>
         <link rel="preload" href={heroVideo} as="video" type="video/mp4" fetchPriority="high" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){var src='${heroVideo}';function swap(){var v=document.querySelector('video.hero-video');if(!v)return false;if(v.getAttribute('src')!==src){v.removeAttribute('poster');v.setAttribute('src',src);v.setAttribute('preload','auto');v.setAttribute('autoplay','');v.setAttribute('muted','');v.setAttribute('playsinline','');v.load();}var p=v.play();if(p&&p.catch)p.catch(function(){});return true;}function kick(){swap();requestAnimationFrame(swap);setTimeout(swap,50);setTimeout(swap,200);setTimeout(swap,700);setTimeout(swap,1500);}var o=new MutationObserver(kick);o.observe(document.documentElement,{childList:true,subtree:true,attributes:true,attributeFilter:['src']});kick();document.addEventListener('DOMContentLoaded',kick,{once:true});window.addEventListener('load',kick,{once:true});setTimeout(function(){o.disconnect();swap();},6000);})();`,
-          }}
-        />
       </head>
       <body className="antialiased">{children}</body>
     </html>
