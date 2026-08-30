@@ -210,7 +210,7 @@ export default function Home() {
           <button key={label} onClick={() => travelToChapter(index)} className={activeScene === index ? "active" : ""} aria-label={`Travel to ${label}`}><i /><span>{label}</span></button>
         ))}</nav>
 
-        <Scene index={0} active={activeScene === 0} visited={visitedScenes.includes(0)} progress={progress} className="entry-scene"><video className="hero-video" src="/media/01-ocean-wall-github.mp4" autoPlay muted loop playsInline preload="auto" aria-hidden="true" /><div className="scene-image opening-image" aria-hidden="true" /><div className="entry-copy">
+        <Scene index={0} active={activeScene === 0} visited={visitedScenes.includes(0)} progress={progress} className="entry-scene"><video className="hero-video" src="/the-living-ocean-niue/media/01-ocean-wall-github.mp4" autoPlay muted loop playsInline preload="auto" aria-hidden="true" /><div className="scene-image opening-image" aria-hidden="true" /><div className="entry-copy">
           <p className="eyebrow">Pacific Dataviz Challenge 2026</p><h1><span>ECHO</span><br />THE LIVING<br />OCEAN <em>— NIUE</em></h1><p className="entry-purpose">Niue&apos;s changing ocean. The people and places it reaches. The choices still ahead.</p>
         </div><div className="entry-koru-stage"><button className="enter-button" onClick={enter} aria-label="Enter through the koru and begin the journey through Niue's Living Ocean"><span className="koru-rings" aria-hidden="true" /><Koru /><strong>Touch the Koru to enter</strong></button></div><div className="hero-credit"><span>A collaboration between DEQODE Group and Oma Tafua.</span><span>Built for the Pacific Community (SPC) Dataviz Challenge 2026.</span></div></Scene>
 
