@@ -1,5 +1,15 @@
 [
   {
+    "title": "Climate Change indicators — Mean sea surface temperature anomalies",
+    "publisher": "Pacific Community (SPC)",
+    "coverage": "Niue",
+    "year": "1990–2025 slice; dataset modified 2026",
+    "source": "https://stats.pacificdata.org/vis?av=true&df%5Bag%5D=SPC&df%5Bds%5D=SPC2&df%5Bid%5D=DF_CLIMATE_CHANGE&df%5Bvs%5D=1.0&dq=A.SST_ANOM.NU&lc=en&pd=%2C&to%5BTIME_PERIOD%5D=false",
+    "indicator": "Annual mean sea surface temperature anomaly",
+    "processing": "Official 2026 Challenge dataset. Decadal means calculated from annual observations; no values interpolated.",
+    "license": "Other (Open), as listed by Pacific Data Hub"
+  },
+  {
     "title": "Annual Average Loss from Tropical Cyclones and Earthquakes at village level for Niue",
     "publisher": "Pacific Community (SPC)",
     "coverage": "Niue villages",
@@ -22,7 +32,7 @@
     "publisher": "Statistics Niue Office",
     "coverage": "Niue and 14 villages",
     "year": 2022,
-    "source": "https://niuestatistics.nu/census/population-housing/",
+    "source": "https://niuestatistics.nu/population/niue-census-of-population-and-housing-2022/",
     "indicator": "Census-night population",
     "processing": "Village share calculated against national census-night total."
   },
@@ -41,7 +51,7 @@
     "coverage": "Niue",
     "year": 2025,
     "source": "https://unfccc.int/sites/default/files/2025-07/NIUE%20NDC%203.0.pdf",
-    "indicator": "Costed conditional climate action",
-    "processing": "Shown as a conditional requirement, not expenditure."
+    "indicator": "Ocean projections and costed conditional climate action",
+    "processing": "Projections and budget transcribed; finance is shown as a stated need, not expenditure."
   }
 ]

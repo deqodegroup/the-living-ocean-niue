@@ -1,6 +1,6 @@
 # The Living Ocean — Niue
 
-An immersive, data-led ScrollWorld created for the Pacific Dataviz Challenge 2026. ECHO guides visitors through Niue's ocean, village, climate-risk, cultural-memory and climate-finance story using verified local project data and linked source attribution.
+An immersive, data-led ScrollWorld created for the Pacific Dataviz Challenge 2026. ECHO guides visitors through Niue's ocean, village, climate-risk, cultural-memory and climate-finance story using an official 2026 Challenge dataset plus verified supporting open data and linked source attribution.
 
 The repository keeps the original Sites/Vinext production target and adds a static Cloudflare Pages target. Both use the same React experience, styles, data and public assets.
 
@@ -89,4 +89,4 @@ npm run deploy:pages
 
 ## Data integrity
 
-Do not alter displayed figures without updating the matching source record and provenance. The interface intentionally withholds village-level loss values where the current project data does not directly verify them.
+The primary competition dataset is SPC `DF_CLIMATE_CHANGE` indicator `SST_ANOM` for Niue (`NU`), 1990–2025. Do not alter displayed figures without updating the matching source record and provenance. The interface intentionally withholds village-level loss values where the current project data does not directly verify them.

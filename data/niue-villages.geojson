@@ -10,7 +10,7 @@
         "name": "Alofi North",
         "census_night_population_2022": 187,
         "source_geometry": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Niue_location_map.svg",
-        "source_population": "https://niuestatistics.nu/census/population-housing/",
+        "source_population": "https://niuestatistics.nu/population/niue-census-of-population-and-housing-2022/",
         "processing": "Village boundaries converted from a CC BY-SA location-map SVG to WGS84 using the map's published geographic limits."
       },
       "geometry": {
@@ -1225,7 +1225,7 @@
         "name": "Alofi South",
         "census_night_population_2022": 423,
         "source_geometry": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Niue_location_map.svg",
-        "source_population": "https://niuestatistics.nu/census/population-housing/",
+        "source_population": "https://niuestatistics.nu/population/niue-census-of-population-and-housing-2022/",
         "processing": "Village boundaries converted from a CC BY-SA location-map SVG to WGS84 using the map's published geographic limits."
       },
       "geometry": {
@@ -3540,7 +3540,7 @@
         "name": "Avatele",
         "census_night_population_2022": 128,
         "source_geometry": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Niue_location_map.svg",
-        "source_population": "https://niuestatistics.nu/census/population-housing/",
+        "source_population": "https://niuestatistics.nu/population/niue-census-of-population-and-housing-2022/",
         "processing": "Village boundaries converted from a CC BY-SA location-map SVG to WGS84 using the map's published geographic limits."
       },
       "geometry": {
@@ -4867,7 +4867,7 @@
         "name": "Hakupu",
         "census_night_population_2022": 180,
         "source_geometry": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Niue_location_map.svg",
-        "source_population": "https://niuestatistics.nu/census/population-housing/",
+        "source_population": "https://niuestatistics.nu/population/niue-census-of-population-and-housing-2022/",
         "processing": "Village boundaries converted from a CC BY-SA location-map SVG to WGS84 using the map's published geographic limits."
       },
       "geometry": {
@@ -5318,7 +5318,7 @@
         "name": "Hikutavake",
         "census_night_population_2022": 39,
         "source_geometry": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Niue_location_map.svg",
-        "source_population": "https://niuestatistics.nu/census/population-housing/",
+        "source_population": "https://niuestatistics.nu/population/niue-census-of-population-and-housing-2022/",
         "processing": "Village boundaries converted from a CC BY-SA location-map SVG to WGS84 using the map's published geographic limits."
       },
       "geometry": {
@@ -5913,7 +5913,7 @@
         "name": "Lakepa",
         "census_night_population_2022": 95,
         "source_geometry": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Niue_location_map.svg",
-        "source_population": "https://niuestatistics.nu/census/population-housing/",
+        "source_population": "https://niuestatistics.nu/population/niue-census-of-population-and-housing-2022/",
         "processing": "Village boundaries converted from a CC BY-SA location-map SVG to WGS84 using the map's published geographic limits."
       },
       "geometry": {
@@ -6116,7 +6116,7 @@
         "name": "Liku",
         "census_night_population_2022": 74,
         "source_geometry": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Niue_location_map.svg",
-        "source_population": "https://niuestatistics.nu/census/population-housing/",
+        "source_population": "https://niuestatistics.nu/population/niue-census-of-population-and-housing-2022/",
         "processing": "Village boundaries converted from a CC BY-SA location-map SVG to WGS84 using the map's published geographic limits."
       },
       "geometry": {
@@ -6559,7 +6559,7 @@
         "name": "Makefu",
         "census_night_population_2022": 73,
         "source_geometry": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Niue_location_map.svg",
-        "source_population": "https://niuestatistics.nu/census/population-housing/",
+        "source_population": "https://niuestatistics.nu/population/niue-census-of-population-and-housing-2022/",
         "processing": "Village boundaries converted from a CC BY-SA location-map SVG to WGS84 using the map's published geographic limits."
       },
       "geometry": {
@@ -7138,7 +7138,7 @@
         "name": "Mutalau",
         "census_night_population_2022": 77,
         "source_geometry": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Niue_location_map.svg",
-        "source_population": "https://niuestatistics.nu/census/population-housing/",
+        "source_population": "https://niuestatistics.nu/population/niue-census-of-population-and-housing-2022/",
         "processing": "Village boundaries converted from a CC BY-SA location-map SVG to WGS84 using the map's published geographic limits."
       },
       "geometry": {
@@ -7505,7 +7505,7 @@
         "name": "Namukulu",
         "census_night_population_2022": 9,
         "source_geometry": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Niue_location_map.svg",
-        "source_population": "https://niuestatistics.nu/census/population-housing/",
+        "source_population": "https://niuestatistics.nu/population/niue-census-of-population-and-housing-2022/",
         "processing": "Village boundaries converted from a CC BY-SA location-map SVG to WGS84 using the map's published geographic limits."
       },
       "geometry": {
@@ -7980,7 +7980,7 @@
         "name": "Tamakautoga",
         "census_night_population_2022": 180,
         "source_geometry": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Niue_location_map.svg",
-        "source_population": "https://niuestatistics.nu/census/population-housing/",
+        "source_population": "https://niuestatistics.nu/population/niue-census-of-population-and-housing-2022/",
         "processing": "Village boundaries converted from a CC BY-SA location-map SVG to WGS84 using the map's published geographic limits."
       },
       "geometry": {
@@ -8415,7 +8415,7 @@
         "name": "Toi",
         "census_night_population_2022": 32,
         "source_geometry": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Niue_location_map.svg",
-        "source_population": "https://niuestatistics.nu/census/population-housing/",
+        "source_population": "https://niuestatistics.nu/population/niue-census-of-population-and-housing-2022/",
         "processing": "Village boundaries converted from a CC BY-SA location-map SVG to WGS84 using the map's published geographic limits."
       },
       "geometry": {
@@ -8694,7 +8694,7 @@
         "name": "Tuapa",
         "census_night_population_2022": 103,
         "source_geometry": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Niue_location_map.svg",
-        "source_population": "https://niuestatistics.nu/census/population-housing/",
+        "source_population": "https://niuestatistics.nu/population/niue-census-of-population-and-housing-2022/",
         "processing": "Village boundaries converted from a CC BY-SA location-map SVG to WGS84 using the map's published geographic limits."
       },
       "geometry": {
@@ -9349,7 +9349,7 @@
         "name": "Vaiea",
         "census_night_population_2022": 81,
         "source_geometry": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Niue_location_map.svg",
-        "source_population": "https://niuestatistics.nu/census/population-housing/",
+        "source_population": "https://niuestatistics.nu/population/niue-census-of-population-and-housing-2022/",
         "processing": "Village boundaries converted from a CC BY-SA location-map SVG to WGS84 using the map's published geographic limits."
       },
       "geometry": {

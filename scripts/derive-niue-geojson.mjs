@@ -108,7 +108,7 @@ const features = paths.map((path, index) => {
       census_night_population_2022: villages[index][1],
       source_geometry: SOURCE,
       source_population:
-        "https://niuestatistics.nu/census/population-housing/",
+        "https://niuestatistics.nu/population/niue-census-of-population-and-housing-2022/",
       processing:
         "Village boundaries converted from a CC BY-SA location-map SVG to WGS84 using the map's published geographic limits.",
     },

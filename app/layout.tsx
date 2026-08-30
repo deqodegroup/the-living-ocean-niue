@@ -7,26 +7,26 @@ const publicSiteUrl =
 
 export const metadata: Metadata = {
   metadataBase: new URL(publicSiteUrl),
-  title: "The Living Ocean — Niue",
+  title: "ECHO: The Living Ocean — Niue",
   description:
-    "An interactive journey through Niue's climate risk, people and resilience data.",
+    "Enter Niue's living ocean: a cinematic journey through climate, community, memory and resilience.",
   openGraph: {
-    title: "The Living Ocean — Niue",
-    description: "Enter Niue's climate story through data, place and memory.",
+    title: "ECHO: The Living Ocean — Niue",
+    description: "The ocean is alive. Enter Niue's climate story through a responsive living ecosystem.",
     type: "website",
     images: [
       {
         url: "/og.png",
         width: 1200,
         height: 630,
-        alt: "The Living Ocean — Niue, data, place and memory",
+        alt: "ECHO: The Living Ocean — Niue",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "The Living Ocean — Niue",
-    description: "Enter Niue's climate story through data, place and memory.",
+    title: "ECHO: The Living Ocean — Niue",
+    description: "The ocean is alive. Enter Niue's climate story.",
     images: ["/og.png"],
   },
   icons: {
