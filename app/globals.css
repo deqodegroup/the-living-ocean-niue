@@ -235,3 +235,26 @@ body{font-family:Inter,"Avenir Next","Segoe UI",Arial,sans-serif}.world-camera::
   .world-scene.is-active .loss-damage-image{opacity:.78!important}
   .world-particle{animation-duration:13s!important}
 }
+
+/* GitHub Hero light-filter trial: full-bleed video with one continuous ocean veil. */
+.entry-scene .hero-video{
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  transform:scale(1.025);
+  opacity:.96;
+  filter:saturate(1.1) contrast(1.02) brightness(1.04);
+  mix-blend-mode:normal;
+}
+.entry-scene::after{
+  inset:0!important;
+  z-index:-1!important;
+  background:
+    linear-gradient(90deg,#03142d9c 0%,#04235442 34%,#06366c18 64%,#031a3952 100%),
+    linear-gradient(180deg,#51dfff1c 0%,transparent 38%,#03172c47 100%)!important;
+}
+.world-camera:has(.entry-scene.is-active) .camera-vignette{
+  background:
+    radial-gradient(ellipse at center,transparent 58%,#00152b24 92%,#00112652 125%),
+    linear-gradient(180deg,#45d7ff0d 0%,transparent 72%,#00162d2e 100%)!important;
+}
