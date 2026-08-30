@@ -1,0 +1,155 @@
+/* Final production polish: hero coverage, smoother handoffs, and restrained living motion. */
+
+/* Hero: hide every possible edge and give the browser a stable compositing surface. */
+.entry-scene{
+  isolation:isolate!important;
+  overflow:hidden!important;
+  background:#03142d!important;
+  clip-path:inset(0);
+}
+.entry-scene .hero-video{
+  position:absolute!important;
+  inset:-2.5%!important;
+  width:105%!important;
+  height:105%!important;
+  max-width:none!important;
+  object-fit:cover!important;
+  object-position:center center!important;
+  z-index:0!important;
+  transform:translate3d(0,0,0) scale(1.035)!important;
+  transform-origin:center center;
+  backface-visibility:hidden;
+  will-change:transform,opacity;
+  contain:paint;
+  background:#03142d;
+}
+.entry-scene::after{
+  content:"";
+  position:absolute!important;
+  inset:-1px!important;
+  z-index:1!important;
+  pointer-events:none!important;
+  background:
+    linear-gradient(90deg,#03142da8 0%,#0423544d 34%,#06366c1a 64%,#031a395e 100%),
+    linear-gradient(180deg,#5ce4ff1f 0%,transparent 38%,#03172c52 100%)!important;
+}
+.entry-scene .entry-copy,
+.entry-scene .entry-koru-stage,
+.entry-scene .hero-credit{z-index:4!important}
+
+/* Perceived video loading: show the approved still immediately until the MP4 paints. */
+.entry-scene::before{
+  content:"";
+  position:absolute;
+  inset:-2%;
+  z-index:-1;
+  background:#03142d url('/the-living-ocean-niue/media/echo-hero.png') center center/cover no-repeat;
+  transform:scale(1.02);
+}
+
+/* Scene handoff: no blur-flash, no hard visibility snap. */
+.world-scene{
+  will-change:opacity,transform;
+  transition:
+    opacity .88s cubic-bezier(.22,1,.36,1),
+    transform 1.05s cubic-bezier(.22,1,.36,1),
+    visibility 0s linear .88s!important;
+  filter:none!important;
+}
+.world-scene.is-active{
+  visibility:visible!important;
+  transition-delay:0s!important;
+}
+.world-scene:not(.is-active){
+  pointer-events:none!important;
+}
+.world-scene.is-active{
+  pointer-events:auto!important;
+}
+
+/* Keep inactive scenes very close to their final position so crossfades feel continuous. */
+.world-scene:not(.is-active){
+  transform:translate3d(0,calc(var(--scene-shift) * -8vh),0) scale(calc(1 + var(--scene-shift) * .07))!important;
+}
+
+/* Static chapters should breathe, not wobble. */
+.world-scene.is-active:not(.entry-scene) .scene-image{
+  animation:chapter-breathe 18s ease-in-out infinite alternate!important;
+  will-change:transform,background-position;
+}
+.world-scene.is-active .map-rings{
+  animation:ambient-map-drift 22s ease-in-out infinite alternate;
+}
+.world-scene.is-active .evidence-table{
+  animation:glass-breathe 8s ease-in-out infinite alternate;
+}
+.world-scene.is-active .finance-paths{
+  animation:finance-glow 7s ease-in-out infinite alternate;
+}
+.world-scene.is-active .memory-orbit{
+  animation:memory-float 9s ease-in-out infinite alternate;
+}
+
+/* Environmental movement is deliberately slow and low amplitude. */
+.ocean-environment{
+  will-change:transform,filter;
+}
+.deep-haze{
+  animation:haze-drift 16s ease-in-out infinite alternate;
+}
+.pointer-aura{
+  transition:background-position .9s ease;
+}
+.living-current{
+  animation-duration:18s!important;
+}
+.light-shaft{
+  animation-duration:22s!important;
+}
+.world-particle{
+  animation-duration:14s!important;
+}
+
+@keyframes chapter-breathe{
+  0%{transform:translate3d(var(--scene-parallax-x,0),var(--scene-parallax-y,0),0) scale(1.018);background-position:50% 50%}
+  100%{transform:translate3d(calc(var(--scene-parallax-x,0) + 5px),calc(var(--scene-parallax-y,0) - 3px),0) scale(1.045);background-position:52% 48%}
+}
+@keyframes ambient-map-drift{
+  0%{transform:rotate(-9deg) scale(1);opacity:.32}
+  100%{transform:rotate(-5deg) scale(1.025);opacity:.46}
+}
+@keyframes glass-breathe{
+  0%{box-shadow:0 24px 76px #000a146e,inset 0 1px #effffb24}
+  100%{box-shadow:0 28px 92px #00172770,inset 0 1px #effffb31,0 0 34px #61ffe313}
+}
+@keyframes finance-glow{
+  0%{opacity:.55;filter:brightness(.95)}
+  100%{opacity:.78;filter:brightness(1.12)}
+}
+@keyframes memory-float{
+  0%{transform:translate3d(0,0,0)}
+  100%{transform:translate3d(0,-7px,0)}
+}
+@keyframes haze-drift{
+  0%{transform:translate3d(-1%,0,0) scale(1.01);opacity:.86}
+  100%{transform:translate3d(1.5%,-.7%,0) scale(1.035);opacity:1}
+}
+
+/* Mobile: reduce GPU load while preserving life. */
+@media(max-width:680px){
+  .entry-scene .hero-video{inset:-4%!important;width:108%!important;height:108%!important;transform:translate3d(0,0,0) scale(1.02)!important}
+  .world-scene{transition-duration:.72s!important}
+  .world-scene.is-active:not(.entry-scene) .scene-image{animation-duration:24s!important}
+  .deep-haze{animation-duration:22s}
+  .world-particle{animation-duration:17s!important}
+  .world-scene.is-active .evidence-table{animation:none}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .world-scene.is-active:not(.entry-scene) .scene-image,
+  .world-scene.is-active .map-rings,
+  .world-scene.is-active .evidence-table,
+  .world-scene.is-active .finance-paths,
+  .world-scene.is-active .memory-orbit,
+  .deep-haze{animation:none!important}
+}
