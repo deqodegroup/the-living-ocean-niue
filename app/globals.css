@@ -50,16 +50,16 @@
 @media(prefers-reduced-motion:reduce){.scene-image,.world-scene.is-active .scene-image,.world-scene.is-active .future-image{transform:none!important}}
 
 /* Ocean Change backdrop: user-supplied whale and dolphin artwork */
-.ocean-change-image{background-image:url('/ocean-change-backdrop.png')!important;background-position:center center;background-size:cover}
+.ocean-change-image{background-image:url('/ocean-change-backdrop.webp')!important;background-position:center center;background-size:cover}
 
 /* Loss & Damage backdrop: user-supplied quiet reef scene */
-.loss-damage-image{background-image:url('/loss-damage-backdrop.png')!important;background-position:center center;background-size:cover}
+.loss-damage-image{background-image:url('/loss-damage-backdrop.webp')!important;background-position:center center;background-size:cover}
 
 /* Culture & Memory backdrop: user-supplied living-ocean artwork */
-.culture-memory-image{background-image:url('/culture-memory-backdrop.png')!important;background-position:center center;background-size:cover}
+.culture-memory-image{background-image:url('/culture-memory-backdrop.webp')!important;background-position:center center;background-size:cover}
 
 /* Climate Finance backdrop: user-supplied future-ocean artwork */
-.future-image{background-image:url('/climate-finance-backdrop.png')!important;background-position:center center;background-size:cover}
+.future-image{background-image:url('/climate-finance-backdrop.webp')!important;background-position:center center;background-size:cover}
 
 /* Final ocean-light pass: restrained caustics, plankton twinkle and readable glass */
 .world-scene:not(.entry-scene) .scene-image::before{content:"";position:absolute;inset:-8%;background:repeating-radial-gradient(ellipse at 18% 8%,transparent 0 34px,#9fffe51a 35px 37px,transparent 38px 72px),repeating-radial-gradient(ellipse at 78% 18%,transparent 0 48px,#6eeeff12 49px 51px,transparent 52px 104px);background-size:125% 155%,145% 175%;mix-blend-mode:screen;opacity:.34;animation:caustic-drift 26s ease-in-out infinite alternate;pointer-events:none}
@@ -204,3 +204,34 @@ body{font-family:Inter,"Avenir Next","Segoe UI",Arial,sans-serif}.world-camera::
 .scene-image::after{background:radial-gradient(circle at var(--pointer-x) var(--pointer-y),transparent 0 12%,#03152c18 34%,#03152c72 77%),linear-gradient(90deg,#03152caa 0%,#03152c42 48%,#03152c78 100%)!important}
 .world-scene.is-active .scene-image{opacity:.78}
 .entry-scene .scene-image::after{background:transparent!important}
+
+/* Final cinematic balance: let the approved scenes breathe while preserving data contrast. */
+.world-scene:not(.entry-scene) .scene-image::after{
+  background:
+    radial-gradient(circle at var(--pointer-x) var(--pointer-y),#8cfff01f 0 7%,transparent 27%),
+    linear-gradient(90deg,#02162b8f 0%,#02162b3d 38%,transparent 64%,#02162b25 100%),
+    linear-gradient(180deg,#35d8ff12 0%,transparent 42%,#00162b38 100%)!important;
+}
+.world-scene.is-active .ocean-change-image,
+.world-scene.is-active .culture-memory-image,
+.world-scene.is-active .future-image{opacity:.88!important}
+.world-scene.is-active .loss-damage-image{opacity:.86!important;filter:saturate(.9) contrast(1.04) brightness(1.04)}
+.evidence-table{
+  background:linear-gradient(145deg,#07394bb8,#041e2bb0)!important;
+  border-color:#a7fff065!important;
+  box-shadow:0 24px 76px #000a146e,inset 0 1px #effffb24!important;
+}
+.world-header,.journey-progress{position:absolute;will-change:transform}
+
+@media(max-width:680px){
+  .world-scene:not(.entry-scene) .scene-image::after{
+    background:
+      linear-gradient(180deg,#02162b45 0%,transparent 32%,#00132682 100%),
+      linear-gradient(90deg,#02162b73 0%,transparent 72%)!important;
+  }
+  .world-scene.is-active .ocean-change-image,
+  .world-scene.is-active .culture-memory-image,
+  .world-scene.is-active .future-image{opacity:.8!important}
+  .world-scene.is-active .loss-damage-image{opacity:.78!important}
+  .world-particle{animation-duration:13s!important}
+}
