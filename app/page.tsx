@@ -166,7 +166,7 @@ export default function Home() {
     <main className={`world ${entered ? "entered" : ""}`}>
       <div className="scroll-track" ref={trackRef}><div className="world-camera" style={{ "--travel": progress } as CSSProperties}>
         <OceanEnvironment progress={progress} /><div className="camera-vignette" aria-hidden="true" /><Echo scene={activeScene} entered={entered} />
-        <header className="world-header"><button className="wordmark" onClick={() => travelTo(0)} aria-label="Return to the beginning">ECHO <span>Niue&apos;s Living Ocean · 19.05°S 169.92°W</span></button><button className="method-button" onClick={() => setSourcesOpen(true)}>Sources</button></header>
+        <div className="collaboration-credit">DEQODE Group × Oma Tafua<span>SPC Dataviz Challenge 2026</span></div><header className="world-header"><button className="wordmark" onClick={() => travelTo(0)} aria-label="Return to the beginning">ECHO <span>Niue&apos;s Living Ocean · 19.05°S 169.92°W</span></button><button className="method-button" onClick={() => setSourcesOpen(true)}>Sources</button></header>
         <nav className="journey-progress" aria-label="Journey progress"><span className="journey-title">Journey</span>{chapters.map((label, index) => (
           <button key={label} onClick={() => { setEntered(true); travelTo([0, .23, .46, .69, .91][index]); }} className={activeScene === index ? "active" : ""} aria-label={`Travel to ${label}`}><i /><span>{label}</span></button>
         ))}</nav>
