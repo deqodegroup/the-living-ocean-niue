@@ -72,6 +72,9 @@
   transform:translate3d(0,calc(var(--scene-shift) * -8vh),0) scale(calc(1 + var(--scene-shift) * .07))!important;
 }
 
+/* Ocean Change: remove the three decorative warm-current lines only. */
+.discovery-scene .scene-current{display:none!important}
+
 /* Static chapters should breathe, not wobble. */
 .world-scene.is-active:not(.entry-scene) .scene-image{
   animation:chapter-breathe 18s ease-in-out infinite alternate!important;
