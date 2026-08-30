@@ -49,6 +49,28 @@
 .scene-image{transform:translate3d(var(--scene-parallax-x,0),var(--scene-parallax-y,0),0) scale(1.08)}.world-scene.is-active .scene-image{transform:translate3d(var(--scene-parallax-x,0),var(--scene-parallax-y,0),0) scale(1.02)}.world-scene.is-active .future-image{transform:translate3d(var(--scene-parallax-x,0),var(--scene-parallax-y,0),0) scale(1.04)}
 @media(prefers-reduced-motion:reduce){.scene-image,.world-scene.is-active .scene-image,.world-scene.is-active .future-image{transform:none!important}}
 
+/* Ocean Change backdrop: user-supplied whale and dolphin artwork */
+.ocean-change-image{background-image:url('/ocean-change-backdrop.png')!important;background-position:center center;background-size:cover}
+
+/* Loss & Damage backdrop: user-supplied quiet reef scene */
+.loss-damage-image{background-image:url('/loss-damage-backdrop.png')!important;background-position:center center;background-size:cover}
+
+/* Culture & Memory backdrop: user-supplied living-ocean artwork */
+.culture-memory-image{background-image:url('/culture-memory-backdrop.png')!important;background-position:center center;background-size:cover}
+
+/* Climate Finance backdrop: user-supplied future-ocean artwork */
+.future-image{background-image:url('/climate-finance-backdrop.png')!important;background-position:center center;background-size:cover}
+
+/* Final ocean-light pass: restrained caustics, plankton twinkle and readable glass */
+.world-scene:not(.entry-scene) .scene-image::before{content:"";position:absolute;inset:-8%;background:repeating-radial-gradient(ellipse at 18% 8%,transparent 0 34px,#9fffe51a 35px 37px,transparent 38px 72px),repeating-radial-gradient(ellipse at 78% 18%,transparent 0 48px,#6eeeff12 49px 51px,transparent 52px 104px);background-size:125% 155%,145% 175%;mix-blend-mode:screen;opacity:.34;animation:caustic-drift 26s ease-in-out infinite alternate;pointer-events:none}
+.world-particle{animation:particle-rise 11s linear var(--delay) infinite,particle-twinkle 4.5s ease-in-out calc(var(--delay) * -1) infinite alternate!important}
+.world-particle:nth-child(7n){background:#bda8ff!important;box-shadow:0 0 10px #9b8cff,0 0 22px #6b5bff!important}
+.world-particle:nth-child(11n){opacity:.7;filter:blur(.35px)}
+.map-intro,.memory-copy{background:linear-gradient(120deg,#0829435e,#0a4a5940 58%,transparent);border:1px solid #a4fff02b;padding:20px 22px;backdrop-filter:blur(8px)}
+@keyframes caustic-drift{0%{transform:translate3d(-2%,-1%,0) rotate(-2deg);opacity:.2}50%{opacity:.38}100%{transform:translate3d(3%,2%,0) rotate(2deg);opacity:.28}}
+@keyframes particle-twinkle{0%{opacity:.32;filter:brightness(.9)}100%{opacity:.9;filter:brightness(1.35)}}
+@media(max-width:680px){.world-scene:not(.entry-scene) .scene-image::before{opacity:.2;background-size:180% 210%,210% 230%;animation-duration:34s}.map-intro,.memory-copy{padding:14px 15px;background:linear-gradient(145deg,#08294370,#0a4a5940 64%,transparent);backdrop-filter:blur(5px)}.world-particle:nth-of-type(n+20){display:none}}
+
 /* Premium cinematic pass */
 body{font-family:Inter,"Avenir Next","Segoe UI",Arial,sans-serif}.world-camera::before{content:"";position:absolute;inset:0;z-index:23;pointer-events:none;background:linear-gradient(90deg,#01060d3d 0,transparent 21%,transparent 79%,#01060d2e 100%);box-shadow:inset 0 0 120px #00070e8a}.world-header{align-items:center}.world-header::after{content:"";position:absolute;left:clamp(22px,4vw,62px);right:clamp(22px,4vw,62px);bottom:0;height:1px;background:linear-gradient(90deg,#70ddeb38,transparent 36%,transparent 74%,#70ddeb24)}.wordmark{letter-spacing:.34em;font-size:10px}.wordmark span{color:#8bb8ca;letter-spacing:.22em}.method-button{background:#03172580;backdrop-filter:blur(12px);border-color:#9eefff59}.method-button:hover,.method-button:focus-visible{background:#063044b8;transform:scale(1.04)}
 .entry-scene{justify-content:flex-start;text-align:left}.entry-copy{width:min(610px,48vw);position:relative}.entry-copy::before{content:"";position:absolute;left:-32px;top:4px;width:1px;height:78%;background:linear-gradient(180deg,var(--cyan),#5be9ff12);box-shadow:0 0 20px #5be9ff63}.entry-copy h1{font-size:clamp(76px,9.2vw,146px);line-height:.82}.entry-copy h1 em{font-style:normal;color:#f5fdff;text-shadow:0 0 12px #c8faff42,0 0 42px #2ecce744}.entry-lead{font-family:Georgia,"Times New Roman",serif;color:var(--limestone);font-size:clamp(19px,1.65vw,27px);line-height:1.35;margin:27px 0 0;max-width:510px}.entry-sub{margin:14px 0 0;max-width:530px;color:#a0bac6;font-size:clamp(11px,1vw,14px);line-height:1.65;letter-spacing:.02em}.entry-action{display:flex;align-items:center;gap:38px;margin-top:20px}.entry-action .enter-button{margin:0}.entry-action>p{display:grid;gap:9px;margin:0;padding-left:18px;border-left:1px solid #7edbe746;color:#8badba;text-transform:uppercase;letter-spacing:.2em;font-size:7px}.entry-action>p span:first-child{color:#c9f9ff}.enter-button{width:132px;height:132px;background:radial-gradient(circle,#7ff5ff1f 0,#12394b16 47%,transparent 70%);transition:transform .35s,filter .35s}.koru-mark{width:70px;height:70px}.enter-button strong{bottom:auto;right:-111px;width:105px;color:#d9faff;line-height:1.55;font-size:7px;letter-spacing:.24em}.entry-action .enter-button strong{display:none}.wildlife-whisper{position:absolute;right:9vw;bottom:10vh;margin:0;color:#b9dde7;text-transform:uppercase;letter-spacing:.3em;font-size:7px;padding-left:38px}.wildlife-whisper::before{content:"";position:absolute;left:0;top:50%;width:26px;height:1px;background:var(--cyan);box-shadow:0 0 9px #5be9ff}.interaction-legend{left:7vw;transform:none;color:#8aafbe}.opening-image{background-image:url('/scene-opening-wildlife.webp');background-position:center center;filter:saturate(.88) contrast(1.08)}.world-scene.is-active .opening-image{opacity:.9}.opening-image::after{background:radial-gradient(circle at var(--pointer-x) var(--pointer-y),transparent 0 7%,#01081224 25%,#01060d9c 72%),linear-gradient(90deg,#01060df5 0%,#01060dbd 27%,#01060d17 59%,#01060d4f 100%),linear-gradient(180deg,#01060d5c,transparent 34%,#01060d82)}
@@ -118,6 +140,23 @@ body{font-family:Inter,"Avenir Next","Segoe UI",Arial,sans-serif}.world-camera::
 @media(max-width:680px){.entry-scene{align-items:center;padding:72px 18px}.entry-copy{top:15%;padding:0}.entry-copy h1{font-size:clamp(47px,14vw,68px);max-width:none}.entry-koru-stage{left:50%;top:57%}.entry-koru-stage .enter-button{width:min(48vw,190px);height:min(48vw,190px)}.entry-koru-stage .enter-button strong{bottom:-25px}.opening-image{background-position:61% 50%}.world-scene.is-active .opening-image{opacity:.86}.echo-being{width:128px}.finance-journey{display:grid;grid-template-columns:auto 22px auto 22px auto;gap:5px;font-size:5px;letter-spacing:.08em}.living-current{width:160%;left:-30%}.ocean-heartbeat{width:15vw}}
 @media(prefers-reduced-motion:reduce){.opening-image,.ocean-change-image,.future-image,.echo-being img{animation:none!important}.echo-signal,.ocean-heartbeat{display:none}.entry-koru-stage .koru-rings::after{animation:none!important}}
 
+/* ScrollWorld reveal pass: one controlled sequence per visited scene */
+.world-scene:not(.entry-scene) .reveal-label,.world-scene:not(.entry-scene) .reveal-title,.world-scene:not(.entry-scene) .reveal-copy,.world-scene:not(.entry-scene) .reveal-panel,.world-scene:not(.entry-scene) .reveal-data,.world-scene:not(.entry-scene) .reveal-source,.world-scene:not(.entry-scene) .reveal-map{opacity:0;transform:translate3d(0,18px,0)}
+.world-scene.is-active.is-visited .reveal-label{animation:reveal-up .8s cubic-bezier(.22,1,.36,1) .05s forwards}
+.world-scene.is-active.is-visited .reveal-title{animation:reveal-up .85s cubic-bezier(.22,1,.36,1) .15s forwards}
+.world-scene.is-active.is-visited .reveal-copy{animation:reveal-up .72s cubic-bezier(.22,1,.36,1) .3s forwards}
+.world-scene.is-active.is-visited .reveal-panel{animation:reveal-panel 1s cubic-bezier(.22,1,.36,1) .48s forwards}
+.world-scene.is-active.is-visited .reveal-data{animation:reveal-data 1.15s cubic-bezier(.22,1,.36,1) .62s forwards}
+.world-scene.is-active.is-visited .reveal-map{animation:reveal-map 1.1s cubic-bezier(.22,1,.36,1) .62s forwards}
+.world-scene.is-active.is-visited .reveal-source{animation:reveal-soft .7s ease-out .88s forwards}
+@keyframes reveal-up{to{opacity:1;transform:none}}
+@keyframes reveal-panel{to{opacity:1;transform:translate3d(0,0,0)}}
+@keyframes reveal-data{0%{opacity:0;transform:translate3d(0,16px,0);filter:brightness(.72)}70%{filter:brightness(1.25)}100%{opacity:1;transform:none;filter:none}}
+@keyframes reveal-map{to{opacity:1;transform:translate3d(0,0,0);filter:drop-shadow(0 0 20px #3adade40)}}
+@keyframes reveal-soft{to{opacity:1;transform:none}}
+@media(max-width:680px){.world-scene:not(.entry-scene) .reveal-label,.world-scene:not(.entry-scene) .reveal-title,.world-scene:not(.entry-scene) .reveal-copy,.world-scene:not(.entry-scene) .reveal-panel,.world-scene:not(.entry-scene) .reveal-data,.world-scene:not(.entry-scene) .reveal-source,.world-scene:not(.entry-scene) .reveal-map{transform:translate3d(0,10px,0)}.world-scene.is-active.is-visited .reveal-panel{animation-delay:.38s}.world-scene.is-active.is-visited .reveal-data,.world-scene.is-active.is-visited .reveal-map{animation-delay:.5s}.world-scene.is-active.is-visited .reveal-source{animation-delay:.68s}}
+@media(prefers-reduced-motion:reduce){.world-scene:not(.entry-scene) .reveal-label,.world-scene:not(.entry-scene) .reveal-title,.world-scene:not(.entry-scene) .reveal-copy,.world-scene:not(.entry-scene) .reveal-panel,.world-scene:not(.entry-scene) .reveal-data,.world-scene:not(.entry-scene) .reveal-source,.world-scene:not(.entry-scene) .reveal-map{opacity:1;transform:none;animation:none!important;filter:none!important}}
+
 /* Readability and evidence-table consistency pass */
 .entry-purpose{max-width:640px;margin:18px auto 0;color:#d0edf0;font-family:Inter,"Avenir Next","Segoe UI",Arial,sans-serif;font-size:clamp(13px,1.15vw,17px);font-weight:400;line-height:1.55;letter-spacing:.035em;text-shadow:0 2px 22px #00131f}.entry-koru-stage{top:63%}.echo-home-mark{position:absolute;left:50%;top:-52px;z-index:3;display:flex;align-items:center;gap:8px;transform:translateX(-50%);color:#dffff8;letter-spacing:.26em;font-size:9px;font-weight:500;text-shadow:0 0 15px #83ffe7;white-space:nowrap}.echo-home-whale{position:relative;display:block;width:72px;height:40px;filter:drop-shadow(0 0 9px #7fffe5a1)}.echo-home-whale img{object-fit:contain}.echo-home-mark b{font:inherit}.awakening .echo-home-mark{opacity:0;transform:translateX(-50%) translateY(-7px);transition:opacity .35s,transform .35s}
 
@@ -132,6 +171,25 @@ body{font-family:Inter,"Avenir Next","Segoe UI",Arial,sans-serif}.world-camera::
 .wordmark{display:flex;align-items:center;gap:12px;text-align:left}.temp-echo-mark{display:grid;place-items:center;width:40px;height:40px;flex:0 0 40px;border:1px solid #9bffeb80;border-radius:50%;color:#effffb;font-family:Georgia,"Times New Roman",serif;font-size:25px;font-weight:400;line-height:1;letter-spacing:0;text-shadow:0 0 14px #7fffe4;box-shadow:0 0 22px #5be9ff22,inset 0 0 18px #7fffe411}.wordmark .wordmark-copy{display:block;margin:0;color:#effcff;font-size:10px;line-height:1.2;letter-spacing:.3em}.wordmark .wordmark-copy small{display:block;margin-top:7px;color:#a8d4df;font-size:9px;font-weight:400;letter-spacing:.2em}.echo-home-mark{display:none}.entry-copy{top:9%}.entry-purpose{position:relative;z-index:9}.entry-koru-stage{top:72%}
 @media(max-width:1000px){.entry-koru-stage{top:72%}}
 @media(max-width:680px){.wordmark{gap:8px}.temp-echo-mark{width:34px;height:34px;flex-basis:34px;font-size:21px}.wordmark .wordmark-copy{font-size:8px}.wordmark .wordmark-copy small{font-size:7px;margin-top:5px}.entry-copy{top:12%}.entry-purpose{max-width:88vw}.entry-koru-stage{top:69%}}
+
+/* Final Hero typography and interface hierarchy */
+.world-header .wordmark{display:block;padding:0;text-align:left;letter-spacing:.08em}
+.world-header .wordmark-copy{display:block;margin:0;color:#f7ffff;font-size:11px;line-height:1.15;letter-spacing:.24em}
+.world-header .wordmark-copy b{display:block;font-weight:600;color:#fff}
+.world-header .wordmark-copy small{display:block;margin-top:7px;color:#c3f4f2;font-size:8px;font-weight:400;letter-spacing:.2em}
+.world-header .temp-echo-mark{display:none}
+.entry-scene .entry-copy{left:clamp(32px,6vw,92px)!important;top:23%!important;width:min(500px,40vw)!important;text-align:left!important}
+.entry-scene .entry-copy h1{font-size:clamp(54px,6.2vw,106px)!important;line-height:.84!important;letter-spacing:-.05em!important;text-shadow:0 3px 22px #0013319c!important}
+.entry-scene .entry-copy h1 span{font-size:1em!important}
+.entry-scene .entry-copy h1 em{font-size:.68em!important;letter-spacing:-.03em!important}
+.entry-scene .entry-copy .eyebrow{font-size:8px;margin-bottom:18px;letter-spacing:.24em}
+.entry-scene .entry-purpose{max-width:390px;margin:21px 0 0!important;font-size:12px;line-height:1.5}
+.entry-scene .entry-koru-stage{left:50%!important;top:69%!important}
+.entry-scene .entry-koru-stage .enter-button{width:min(16vw,190px);height:min(16vw,190px);border:0!important}
+.entry-scene .entry-koru-stage .enter-button strong{right:auto;bottom:-27px;width:max-content;transform:translateX(-50%);left:50%;font-size:7px;letter-spacing:.28em;color:#f3ffff}
+.hero-credit{position:absolute;right:clamp(24px,6vw,92px);bottom:28px;z-index:6;display:grid;gap:4px;text-align:right;color:#efffffcc;font-size:8px;line-height:1.35;letter-spacing:.08em;pointer-events:none}
+@media(max-width:1000px){.entry-scene .entry-copy{width:min(520px,48vw)!important}.entry-scene .entry-copy h1{font-size:clamp(52px,8vw,94px)!important}.entry-scene .entry-koru-stage .enter-button{width:180px;height:180px}}
+@media(max-width:680px){.world-header .wordmark-copy{font-size:8px;letter-spacing:.2em}.world-header .wordmark-copy small{font-size:6px;margin-top:5px}.entry-scene .entry-copy{left:24px!important;top:17%!important;width:calc(100% - 48px)!important}.entry-scene .entry-copy h1{font-size:clamp(46px,13vw,70px)!important;line-height:.86!important;max-width:82vw}.entry-scene .entry-copy .eyebrow{font-size:7px;margin-bottom:13px}.entry-scene .entry-purpose{font-size:10px;max-width:74vw;margin-top:15px!important}.entry-scene .entry-koru-stage{left:50%!important;top:66%!important}.entry-scene .entry-koru-stage .enter-button{width:min(38vw,150px);height:min(38vw,150px)}.entry-scene .entry-koru-stage .enter-button strong{bottom:-24px;font-size:5px;letter-spacing:.22em}.hero-credit{right:18px;bottom:20px;font-size:6px;line-height:1.3;max-width:64vw}}
 
 /* Living ocean light pass: brighten the atmosphere without changing data layouts */
 .ocean-environment{background:radial-gradient(circle at 50% -5%,#37d8ff9c 0,transparent 38%),linear-gradient(180deg,#06214a 0%,#05375b 48%,#07566a 100%)!important}
