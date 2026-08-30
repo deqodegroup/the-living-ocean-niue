@@ -258,3 +258,15 @@ body{font-family:Inter,"Avenir Next","Segoe UI",Arial,sans-serif}.world-camera::
     radial-gradient(ellipse at center,transparent 58%,#00152b24 92%,#00112652 125%),
     linear-gradient(180deg,#45d7ff0d 0%,transparent 72%,#00162d2e 100%)!important;
 }
+
+
+/* Final polish: overlay coverage, clean scene handoff, and stable loading. */
+.entry-scene{isolation:isolate;overflow:hidden}
+.entry-scene .hero-video{z-index:0!important}
+.entry-scene::after{inset:0!important;z-index:1!important;pointer-events:none!important}
+.entry-scene .entry-copy,.entry-scene .entry-koru-stage,.entry-scene .hero-credit{z-index:4!important}
+.world-scene{transition:opacity .72s cubic-bezier(.22,1,.36,1),visibility .72s ease,filter .72s ease,transform .9s cubic-bezier(.22,1,.36,1)}
+.world-scene:not(.is-active){pointer-events:none!important}
+.world-scene.is-active{pointer-events:auto!important}
+.hero-video{backface-visibility:hidden;transform:translateZ(0) scale(1.025)}
+.scene-image,.ocean-environment,.world-particle,.light-shaft,.living-current{backface-visibility:hidden}
