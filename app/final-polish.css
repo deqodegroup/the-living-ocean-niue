@@ -72,8 +72,17 @@
   transform:translate3d(0,calc(var(--scene-shift) * -8vh),0) scale(calc(1 + var(--scene-shift) * .07))!important;
 }
 
-/* Ocean Change: remove the three decorative warm-current lines only. */
-.discovery-scene .scene-current{display:none!important}
+/* Ocean Change: remove the legacy three-line warm current layer completely. */
+.discovery-scene .scene-current,
+.discovery-scene .scene-current::before,
+.discovery-scene .scene-current::after{
+  display:none!important;
+  content:none!important;
+  border:0!important;
+  opacity:0!important;
+  visibility:hidden!important;
+  animation:none!important;
+}
 
 /* Static chapters should breathe, not wobble. */
 .world-scene.is-active:not(.entry-scene) .scene-image{
