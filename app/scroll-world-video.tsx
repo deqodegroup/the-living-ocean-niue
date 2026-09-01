@@ -119,8 +119,32 @@ export default function ScrollWorldVideo({ progress, scene }: { progress: number
       }
     };
 
+    // Hero (scene 0) already streams off its own <video src> with preload="auto" — fetching a
+    // duplicate full-file blob for it only delays first paint (it can't be "ready" until the
+    // whole clip downloads), so it's excluded from the blob-prefetch path entirely.
     // Current, previous and two scenes ahead: enough buffer for fast scroll without loading all 45 MB at once.
-    [scene - 1, scene, scene + 1, scene + 2].forEach((index) => { void loadClip(index); });
+    const wanted = [scene - 1, scene, scene + 1, scene + 2].filter((index) => index !== 0);
+
+    if (scene === 0 && !readyRef.current[0]) {
+      // Give the hero's own network request a clear run before starting the look-ahead
+      // downloads for scenes 1 and 2, instead of all three competing for bandwidth at once.
+      const heroVideo = videoRefs.current[0];
+      let started = false;
+      const start = () => {
+        if (started) return;
+        started = true;
+        wanted.forEach((index) => { void loadClip(index); });
+      };
+      const fallback = window.setTimeout(start, 600);
+      heroVideo?.addEventListener("canplay", start, { once: true });
+      return () => {
+        cancelled = true;
+        window.clearTimeout(fallback);
+        heroVideo?.removeEventListener("canplay", start);
+      };
+    }
+
+    wanted.forEach((index) => { void loadClip(index); });
     return () => { cancelled = true; };
   }, [scene]);
 
