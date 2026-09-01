@@ -37,7 +37,8 @@ export const metadata: Metadata = {
   },
 };
 
-const heroVideo = "/the-living-ocean-niue/media/01-ocean-wall-github.mp4";
+const heroVideo = "https://the-living-ocean-niue.lordstorm.chatgpt.site/media/01-ocean-wall.mp4";
+const heroVideoOrigin = "https://the-living-ocean-niue.lordstorm.chatgpt.site";
 
 export default function RootLayout({
   children,
@@ -47,6 +48,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
+        <link rel="preconnect" href={heroVideoOrigin} crossOrigin="anonymous" />
         <link rel="preload" href={heroVideo} as="video" type="video/mp4" fetchPriority="high" />
       </head>
       <body className="antialiased">{children}</body>
